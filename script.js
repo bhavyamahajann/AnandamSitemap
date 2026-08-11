@@ -519,7 +519,7 @@ let y = 70;
   const bottomY = spY + spH + 60;
   world.push(`<path d="M ${MARGIN-60} ${bottomY+40} Q ${entryX} ${bottomY-10} ${tx+spW2+80} ${bottomY+40} L ${tx+spW2+80} ${bottomY+110} Q ${entryX} ${bottomY+60} ${MARGIN-60} ${bottomY+110} Z" fill="var(--road)"/>`);
   world.push(`<path d="M ${MARGIN-40} ${bottomY+75} Q ${entryX} ${bottomY+25} ${tx+spW2+60} ${bottomY+75}" stroke="#e7e2d6" stroke-width="2" stroke-dasharray="10 8" fill="none" opacity="0.5"/>`);
-  world.push(roadLabel(entryX, bottomY+90, 'PROPOSED STREET HIGHWAY'));
+  world.push(roadLabel(entryX, bottomY+78, 'PROPOSED STREET HIGHWAY'));
   track(MARGIN-60, bottomY, (tx+spW2+80)-(MARGIN-60), 150);
 }
 
