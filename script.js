@@ -489,15 +489,18 @@ let y = 70;
   const b21 = rowBlock(x, y, block21); world.push(b21.svg);
   const spY = y + PH + 30, spH = 170;
   const spW1 = 90, spW2 = b21.w + 90 - spW1 - 14;
-  world.push(`<rect x="${x}" y="${spY}" width="${spW1}" height="${spH}" rx="10" style="fill:var(--green)"/>`);
-  world.push(`<rect x="${x+14}" y="${spY+14}" width="${spW1-28}" height="${spH-28}" rx="6" fill="#1f6f4a"/>`);
-  world.push(`<text x="${x+spW1/2}" y="${spY+spH/2}" class="amenity-sub" transform="rotate(-90 ${x+spW1/2} ${spY+spH/2})">GYM</text>`);
-  const tx = x+spW1+14;
+  // Shift the entire sports container right to align below plots 30, 29, 31
+  const sportsX = x + 70; // Additional right shift
+  world.push(`<rect x="${sportsX}" y="${spY}" width="${spW1}" height="${spH}" rx="10" style="fill:var(--green)"/>`);
+  world.push(`<rect x="${sportsX+14}" y="${spY+14}" width="${spW1-28}" height="${spH-28}" rx="6" fill="#1f6f4a"/>`);
+  world.push(`<text x="${sportsX+spW1/2}" y="${spY+spH/2}" class="amenity-sub" transform="rotate(-90 ${sportsX+spW1/2} ${spY+spH/2})">GYM</text>`);
+  const tx = sportsX+spW1+14;
   world.push(`<rect x="${tx}" y="${spY}" width="${spW2}" height="${spH}" rx="10" fill="#1f6f4a"/>`);
   world.push(`<rect x="${tx+10}" y="${spY+10}" width="${spW2-20}" height="${spH-20}" fill="none" stroke="#e7e2d6" stroke-width="2" opacity="0.7"/>`);
   world.push(`<line x1="${tx+spW2/2}" y1="${spY+10}" x2="${tx+spW2/2}" y2="${spY+spH-10}" stroke="#e7e2d6" stroke-width="2" opacity="0.7"/>`);
   world.push(`<circle cx="${tx+spW2/2}" cy="${spY+spH/2}" r="18" fill="none" stroke="#e7e2d6" stroke-width="1.5" opacity="0.6"/>`);
   world.push(`<text x="${tx+spW2/2}" y="${spY+spH-14}" class="amenity-label">TENNIS COURT</text>`);
+  track(sportsX,spY,spW1+spW2+14,spH);
   track(x,spY,spW1+spW2+14,spH);
 
   // entry node between the two amenity clusters
