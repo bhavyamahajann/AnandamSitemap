@@ -441,12 +441,13 @@ let y = 70;
   let rightX = leftX + b11.w + 330, rightY = y;
   const b17 = grid2row(rightX, rightY, block17Top, block17Bot); world.push(b17.svg);
   
-  // Plot 77 with normal width but increased height, with proper gap from block17
+  // Plot 77 positioned below plot 76 (not parallel)
   const plot77Width = PW; // Normal single plot width (same as plot 76)
   const plot77Height = PH + 72; // Increased height
-  const plot76TopY = rightY + PH; // Y position where plot 76 starts (top of bottom row)
+  const plot76BottomY = rightY + PH + RCORR; // Y position where plot 76 ends (bottom row bottom)
+  const plot77Y = plot76BottomY + 20; // Start below plot 76 with gap
   const plot77X = rightX + b17.w + 25; // Increased gap from block17 (was GAP=3, now 25)
-  const e77 = rowBlock(plot77X, plot76TopY, extra77, plot77Width, plot77Height); 
+  const e77 = rowBlock(plot77X, plot77Y, extra77, plot77Width, plot77Height); 
   world.push(e77.svg);
   
   world.push(`<rect x="${rightX+b17.w+18}" y="${rightY-6}" width="34" height="26" rx="4" fill="#8a2f2f" opacity="0.85" transform="rotate(45 ${rightX+b17.w+35} ${rightY+7})"/>`);
@@ -457,7 +458,7 @@ let y = 70;
   
   // Position col19 (39-31) directly below plot 77 with proper gap
   const col19X = plot77X; // Same X as plot 77 (directly below)
-  const col19Y = plot76TopY + plot77Height + 30; // Below plot 77 with proper gap
+  const col19Y = plot77Y + plot77Height + 30; // Below plot 77 with proper gap
   const c19 = colBlock(col19X, col19Y, col19); 
   world.push(c19.svg);
   
