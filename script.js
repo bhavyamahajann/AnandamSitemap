@@ -412,8 +412,13 @@ let y = 70;
 
 // SECTION 5 : left stack (11,12,13,14+15) parallel with right stack (17,18) + col19, crossover road between
 {
-  const topY = y;
-  let leftX = MARGIN, leftY = y;
+  // Position block11 parallel to plot 101 (in block9) and below plot 132 (in block5)
+  const plot101Y = b9Y + (4 * (PH + GAP)); // Plot 101 is 5th plot in block9L (0-indexed: 4)
+  const plot132Y = p5y + (4 * (PH + GAP)); // Plot 132 is 5th plot in block5R (0-indexed: 4)
+  const block11StartY = Math.max(plot101Y, plot132Y + PH + 60); // Parallel to 101, below 132
+  
+  const topY = block11StartY;
+  let leftX = MARGIN, leftY = block11StartY;
   const b11 = grid2row(leftX, leftY, block11Top, block11Bot); world.push(b11.svg);
   world.push(roadLabel(leftX + b11.w/2, leftY + b11.h + 24, '7.50 MTR ROAD'));
   leftY += b11.h + 60;
@@ -437,8 +442,8 @@ let y = 70;
   
   leftY += b13.h + 60 + Math.max(b14.h, b15.h);
 
-  // right stack
-  let rightX = leftX + b11.w + 330, rightY = y;
+  // right stack - positioned at same Y as block11
+  let rightX = leftX + b11.w + 330, rightY = block11StartY;
   const b17 = grid2row(rightX, rightY, block17Top, block17Bot); world.push(b17.svg);
   
   // Plot 77 with normal width but increased height, top aligned with plot 76 top
