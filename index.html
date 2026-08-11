@@ -17,22 +17,21 @@
       <input id="plotSearch" type="text" placeholder="Find plot no." />
       <button onclick="findPlot()">Go</button>
     </div>
+    <div id="statusToggle" onclick="toggleStatus()">
+      <span class="label">Status</span>
+      <div class="toggle-switch" id="toggleSwitch">
+        <div class="toggle-slider"></div>
+      </div>
+      <span id="statusStats">
+        <span class="reserved-count" id="reservedCount">0</span> Reserved · 
+        <span class="sold-company-count" id="soldCompanyCount">0</span> Sold (Co.) · 
+        <span class="sold-partner-count" id="soldPartnerCount">0</span> Sold (CP) · 
+        <span class="available-count" id="availableCount">0</span> Available
+      </span>
+    </div>
   </header>
   <!-- <div id="hint">Drag to pan · Scroll / pinch to zoom</div> -->
   <div id="searchMsg">Plot not found</div>
-
-  <div id="statusToggle" onclick="toggleStatus()">
-    <span class="label">Status</span>
-    <div class="toggle-switch" id="toggleSwitch">
-      <div class="toggle-slider"></div>
-    </div>
-    <span id="statusStats">
-      <span class="reserved-count" id="reservedCount">0</span> Reserved · 
-      <span class="sold-company-count" id="soldCompanyCount">0</span> Sold (Co.) · 
-      <span class="sold-partner-count" id="soldPartnerCount">0</span> Sold (CP) · 
-      <span class="available-count" id="availableCount">0</span> Available
-    </span>
-  </div>
 
   <div id="viewport">
     <svg id="canvas" xmlns="http://www.w3.org/2000/svg">

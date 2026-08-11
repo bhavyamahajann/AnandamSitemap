@@ -31,7 +31,7 @@ header{
   pointer-events:none;
 }
 @media (max-width: 768px) {
-  header{padding:12px 16px;flex-wrap:wrap;gap:8px;}
+  header{padding:12px 16px;flex-wrap:wrap;gap:6px;}
 }
 header .brand{pointer-events:auto;}
 header h1{
@@ -49,17 +49,17 @@ header .sub{color:var(--gold);font-size:11px;letter-spacing:3px;text-transform:u
 #searchWrap{pointer-events:auto;display:flex;align-items:center;gap:8px;background:var(--panel);
   border:1px solid var(--gold-soft);border-radius:30px;padding:8px 16px;backdrop-filter:blur(8px);}
 @media (max-width: 768px) {
-  #searchWrap{padding:6px 12px;width:100%;margin-top:8px;order:2;}
+  #searchWrap{padding:5px 10px;width:auto;margin-top:0;order:2;flex:0 1 auto;}
 }
 #searchWrap input{background:transparent;border:none;outline:none;color:var(--cream);font-size:13px;width:120px;font-family:'Inter',sans-serif;}
 @media (max-width: 768px) {
-  #searchWrap input{font-size:14px;flex:1;width:auto;}
+  #searchWrap input{font-size:12px;flex:1;width:80px;}
 }
 #searchWrap input::placeholder{color:var(--text-mute);}
 #searchWrap button{background:var(--gold);border:none;color:#20242a;font-weight:600;font-size:12px;
   padding:6px 14px;border-radius:20px;cursor:pointer;}
 @media (max-width: 768px) {
-  #searchWrap button{padding:8px 16px;font-size:13px;}
+  #searchWrap button{padding:6px 12px;font-size:12px;}
 }
 #searchMsg{position:absolute;top:78px;right:26px;z-index:20;color:#e88;font-size:12px;background:var(--panel);
   padding:6px 12px;border-radius:8px;display:none;border:1px solid #a44;}
@@ -128,9 +128,10 @@ svg{display:block;}
   border-radius:30px;padding:10px 18px;backdrop-filter:blur(8px);display:flex;align-items:center;gap:12px;
   font-size:12px;color:var(--text-soft);cursor:pointer;user-select:none;}
 @media (max-width: 768px) {
-  #statusToggle{top:118px;right:16px;left:16px;padding:6px 10px;gap:6px;
-    border-radius:20px;font-size:9px;flex-wrap:nowrap;max-width:none;white-space:nowrap;
-    justify-content:center;background:transparent;border:none;backdrop-filter:none;}
+  #statusToggle{position:relative;top:auto;right:auto;left:auto;padding:5px 8px;gap:5px;
+    border-radius:18px;font-size:9px;flex-wrap:nowrap;max-width:none;white-space:nowrap;
+    justify-content:center;background:transparent;border:none;backdrop-filter:none;
+    order:3;margin-left:6px;}
 }
 #statusToggle:hover{border-color:var(--gold);}
 #statusToggle .label{font-weight:600;letter-spacing:.5px;}
