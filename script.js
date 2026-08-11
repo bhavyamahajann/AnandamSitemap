@@ -402,7 +402,7 @@ let y = 70;
   const plot120X = block8X; // Plot 120 is at the start of block8Bot
   const b9X = plot120X;
   const b9Y = col10Y; // Same Y level as col10 (plot 119) - parallel alignment
-  const b9 = grid2col(b9X, b9Y, block9L, block9R); 
+  const b9 = grid2col(b9X, b9Y, block9L, block9R, CORR, PW, 45); 
   world.push(b9.svg);
 
   const rightSectionMaxH = Math.max(b6.h, rightColYAligned - laneY + rc1.h);
