@@ -441,11 +441,13 @@ let y = 70;
   let rightX = leftX + b11.w + 330, rightY = y;
   const b17 = grid2row(rightX, rightY, block17Top, block17Bot); world.push(b17.svg);
   
-  // Plot 77 with normal width but increased height, top aligned with plot 76 top
+  // Plot 77 with normal width but increased height, aligned directly with plot 76
   const plot77Width = PW; // Normal single plot width
   const plot77Height = PH + 72; // Increased height
   const plot76TopY = rightY + PH; // Y position where plot 76 starts (top of bottom row)
-  const e77 = rowBlock(rightX + b17.w + 20, plot76TopY, extra77, plot77Width, plot77Height); 
+  const plot76X = rightX + (3 * (PW + GAP)); // Plot 76 is 4th plot in bottom row (0-indexed: 3)
+  const plot77X = plot76X + PW + GAP; // Right next to plot 76
+  const e77 = rowBlock(plot77X, plot76TopY, extra77, plot77Width, plot77Height); 
   world.push(e77.svg);
   
   world.push(`<rect x="${rightX+b17.w+18}" y="${rightY-6}" width="34" height="26" rx="4" fill="#8a2f2f" opacity="0.85" transform="rotate(45 ${rightX+b17.w+35} ${rightY+7})"/>`);
@@ -455,8 +457,6 @@ let y = 70;
   const b18 = grid2col(rightX, rightY, block18L, block18R); world.push(b18.svg);
   
   // Position col19 (39-31) parallel to plot 76 (same Y level), right of plot 77
-  const plot77X = rightX + b17.w + 20;
-  const plot77Y = plot76TopY;
   const col19X = plot77X + plot77Width + 20; // Right of plot 77 with gap
   const col19Y = plot76TopY; // Parallel to plot 76 (same Y level)
   const c19 = colBlock(col19X, col19Y, col19); 
