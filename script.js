@@ -629,43 +629,61 @@ document.getElementById('plotSearch').addEventListener('keydown', e=>{ if(e.key=
 let statusViewEnabled = false;
 
 function toggleStatus() {
-  console.log('Toggle clicked, current state:', statusViewEnabled);
-  statusViewEnabled = !statusViewEnabled;
-  const toggleSwitch = document.getElementById('toggleSwitch');
-  const statusStats = document.getElementById('statusStats');
-  
-  toggleSwitch.classList.toggle('active');
-  
-  if (statusViewEnabled) {
-    // Apply status colors
-    let reservedCount = 0, soldCompanyCount = 0, soldPartnerCount = 0, availableCount = 0;
+  try {
+    console.log('Toggle clicked, current state:', statusViewEnabled);
+    statusViewEnabled = !statusViewEnabled;
+    const toggleSwitch = document.getElementById('toggleSwitch');
+    const statusStats = document.getElementById('statusStats');
     
-    Object.keys(plotData).forEach(plotNum => {
-      const plotEl = document.getElementById(`plot-${plotNum}`);
-      const data = plotData[plotNum];
+    if (!toggleSwitch) {
+      console.error('toggleSwitch element not found!');
+      return;
+    }
+    if (!statusStats) {
+      console.error('statusStats element not found!');
+      return;
+    }
+    
+    toggleSwitch.classList.toggle('active');
+    console.log('Toggle switch class toggled, active:', toggleSwitch.classList.contains('active'));
+    
+    if (statusViewEnabled) {
+      console.log('Enabling status view...');
+      // Apply status colors
+      let reservedCount = 0, soldCompanyCount = 0, soldPartnerCount = 0, availableCount = 0;
       
-      if (plotEl && data) {
-        plotEl.classList.remove('reserved', 'sold-company', 'sold-partner', 'available');
-        plotEl.classList.add(data.status);
+      Object.keys(plotData).forEach(plotNum => {
+        const plotEl = document.getElementById(`plot-${plotNum}`);
+        const data = plotData[plotNum];
         
-        if (data.status === 'reserved') reservedCount++;
-        else if (data.status === 'sold-company') soldCompanyCount++;
-        else if (data.status === 'sold-partner') soldPartnerCount++;
-        else if (data.status === 'available') availableCount++;
-      }
-    });
-    
-    document.getElementById('reservedCount').textContent = reservedCount;
-    document.getElementById('soldCompanyCount').textContent = soldCompanyCount;
-    document.getElementById('soldPartnerCount').textContent = soldPartnerCount;
-    document.getElementById('availableCount').textContent = availableCount;
-    statusStats.classList.add('show');
-  } else {
-    // Remove status colors
-    document.querySelectorAll('.plot').forEach(el => {
-      el.classList.remove('reserved', 'sold-company', 'sold-partner', 'available');
-    });
-    statusStats.classList.remove('show');
+        if (plotEl && data) {
+          plotEl.classList.remove('reserved', 'sold-company', 'sold-partner', 'available');
+          plotEl.classList.add(data.status);
+          
+          if (data.status === 'reserved') reservedCount++;
+          else if (data.status === 'sold-company') soldCompanyCount++;
+          else if (data.status === 'sold-partner') soldPartnerCount++;
+          else if (data.status === 'available') availableCount++;
+        }
+      });
+      
+      document.getElementById('reservedCount').textContent = reservedCount;
+      document.getElementById('soldCompanyCount').textContent = soldCompanyCount;
+      document.getElementById('soldPartnerCount').textContent = soldPartnerCount;
+      document.getElementById('availableCount').textContent = availableCount;
+      statusStats.classList.add('show');
+      console.log('Status view enabled. Counts:', {reservedCount, soldCompanyCount, soldPartnerCount, availableCount});
+    } else {
+      console.log('Disabling status view...');
+      // Remove status colors
+      document.querySelectorAll('.plot').forEach(el => {
+        el.classList.remove('reserved', 'sold-company', 'sold-partner', 'available');
+      });
+      statusStats.classList.remove('show');
+      console.log('Status view disabled');
+    }
+  } catch (error) {
+    console.error('Error in toggleStatus:', error);
   }
 }
 

@@ -126,12 +126,12 @@ svg{display:block;}
 
 #statusToggle{position:absolute;top:78px;right:26px;z-index:20;background:var(--panel);border:1px solid var(--gold-soft);
   border-radius:30px;padding:10px 18px;backdrop-filter:blur(8px);display:flex;align-items:center;gap:12px;
-  font-size:12px;color:var(--text-soft);cursor:pointer;user-select:none;}
+  font-size:12px;color:var(--text-soft);cursor:pointer;user-select:none;pointer-events:auto;}
 @media (max-width: 768px) {
   #statusToggle{position:relative;top:auto;right:auto;left:auto;padding:5px 8px;gap:5px;
     border-radius:18px;font-size:9px;flex-wrap:nowrap;max-width:none;white-space:nowrap;
     justify-content:center;background:transparent;border:none;backdrop-filter:none;
-    order:3;margin-left:6px;}
+    order:3;margin-left:6px;pointer-events:auto;}
 }
 #statusToggle:hover{border-color:var(--gold);}
 #statusToggle .label{font-weight:600;letter-spacing:.5px;}
