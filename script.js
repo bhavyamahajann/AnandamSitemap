@@ -505,9 +505,12 @@ let y = 70;
   world.push(`<text x="${tx+spW2/2}" y="${spY+spH-14}" class="amenity-label">TENNIS COURT</text>`);
   track(sportsX,spY,spW1+spW2+14,spH);
 
-  // entry node between the two amenity clusters
-  const entryX = MARGIN + 300, entryY = spY + spH/2;
-  world.push(`<line x1="${entryX}" y1="${y-30}" x2="${entryX}" y2="${entryY-24}" stroke="var(--gold)" stroke-width="2" stroke-dasharray="6 6" opacity="0.7"/>`);
+  // entry node centered between the two amenity clusters
+  const leftAreaEnd = MARGIN + amW; // End of kids park area (plots 1-6)
+  const rightAreaStart = sportsX; // Start of tennis court area (plots 7-12)
+  const entryX = (leftAreaEnd + rightAreaStart) / 2; // Center between the two areas
+  const entryY = spY + spH/2;
+  world.push(`<line x1="${entryX}" y1="${b21Y-30}" x2="${entryX}" y2="${entryY-24}" stroke="var(--gold)" stroke-width="2" stroke-dasharray="6 6" opacity="0.7"/>`);
   world.push(node(entryX, entryY, 'A'));
   world.push(`<path d="M ${entryX-8} ${entryY-40} L ${entryX} ${entryY-56} L ${entryX+8} ${entryY-40} Z" fill="#c94b3f"/>`);
   world.push(`<text x="${entryX}" y="${entryY-64}" class="amenity-sub" style="fill:#e7bdb6">ENTRY</text>`);
