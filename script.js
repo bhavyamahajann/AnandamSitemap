@@ -455,8 +455,8 @@ let y = 70;
 
   const b18 = grid2col(rightX, rightY, block18L, block18R); world.push(b18.svg);
   
-  // Position col19 (39-31) below plot 77 with minimal gap
-  const col19X = plot77X + plot77Width + 20; // Right of plot 77 with gap
+  // Position col19 (39-31) directly below plot 77
+  const col19X = plot77X; // Same X as plot 77 (directly below)
   const col19Y = plot76TopY + plot77Height + 10; // Below plot 77 with minimal gap
   const c19 = colBlock(col19X, col19Y, col19); 
   world.push(c19.svg);
