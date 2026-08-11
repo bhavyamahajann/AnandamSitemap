@@ -60,8 +60,9 @@
   .plot{fill:var(--cream);stroke:var(--cream-line);stroke-width:1;transition:fill .15s;}
   .plot:hover{fill:#fff8e8;}
   .plot.highlight{fill:#ffd77a;stroke:#7a5b1e;stroke-width:2;}
-  .plot.sold{fill:#e85555;stroke:#a33333;stroke-width:1.5;}
-  .plot.available{fill:#5ce88f;stroke:#2a9651;stroke-width:1.5;}
+  .plot.reserved{fill:#ffff00;stroke:#d4d400;stroke-width:1.5;}
+  .plot.sold-company{fill:#90ee90;stroke:#5cb85c;stroke-width:1.5;}
+  .plot.sold-partner{fill:#00bfff;stroke:#0099cc;stroke-width:1.5;}
   .plot-num{fill:var(--ink);font-size:11px;font-family:'Inter',sans-serif;font-weight:600;text-anchor:middle;pointer-events:none;}
   .hedge{fill:var(--hedge);stroke:var(--hedge-line);stroke-width:1;}
   .road-label{fill:#e7e2d6;font-size:15px;letter-spacing:2px;font-family:'Inter',sans-serif;font-weight:600;text-anchor:middle;opacity:.85;}
@@ -96,8 +97,9 @@
   .toggle-switch.active .toggle-slider{transform:translateX(20px);}
   #statusStats{margin-left:8px;font-size:11px;color:var(--text-mute);display:none;}
   #statusStats.show{display:inline;}
-  #statusStats .sold-count{color:#e85555;font-weight:700;}
-  #statusStats .available-count{color:#5ce88f;font-weight:700;}
+  #statusStats .reserved-count{color:#ffff00;font-weight:700;}
+  #statusStats .sold-company-count{color:#90ee90;font-weight:700;}
+  #statusStats .sold-partner-count{color:#00bfff;font-weight:700;}
 
   #hint{position:absolute;top:78px;left:26px;z-index:15;color:var(--text-mute);font-size:11px;letter-spacing:.5px;pointer-events:none;}
 
@@ -114,8 +116,9 @@
   #tooltip .plot-tags{margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;}
   #tooltip .tag{background:var(--gold-soft);color:var(--gold);font-size:10px;padding:3px 8px;
     border-radius:4px;font-weight:600;letter-spacing:.5px;}
-  #tooltip .tag.status-sold{background:#e8555520;color:#e85555;border:1px solid #e85555;}
-  #tooltip .tag.status-available{background:#5ce88f20;color:#5ce88f;border:1px solid#2a9651;}
+  #tooltip .tag.status-reserved{background:#ffff0030;color:#d4d400;border:1px solid #d4d400;}
+  #tooltip .tag.status-sold-company{background:#90ee9030;color:#5cb85c;border:1px solid #5cb85c;}
+  #tooltip .tag.status-sold-partner{background:#00bfff30;color:#0099cc;border:1px solid #0099cc;}
 </style>
 </head>
 <body>
@@ -139,8 +142,9 @@
       <div class="toggle-slider"></div>
     </div>
     <span id="statusStats">
-      <span class="sold-count" id="soldCount">0</span> Sold · 
-      <span class="available-count" id="availableCount">0</span> Available
+      <span class="reserved-count" id="reservedCount">0</span> Reserved · 
+      <span class="sold-company-count" id="soldCompanyCount">0</span> Sold (Company) · 
+      <span class="sold-partner-count" id="soldPartnerCount">0</span> Sold (Partner)
     </span>
   </div>
 
@@ -153,8 +157,9 @@
   <div id="legend">
     <h3>Legend</h3>
     <div class="leg-row"><span class="swatch" style="background:var(--cream);border:1px solid var(--cream-line);"></span>Residential Plot</div>
-    <div class="leg-row"><span class="swatch" style="background:#5ce88f;border:1px solid #2a9651;"></span>Available Plot</div>
-    <div class="leg-row"><span class="swatch" style="background:#e85555;border:1px solid #a33333;"></span>Sold Plot</div>
+    <div class="leg-row"><span class="swatch" style="background:#ffff00;border:1px solid #d4d400;"></span>Reserved by Company</div>
+    <div class="leg-row"><span class="swatch" style="background:#90ee90;border:1px solid #5cb85c;"></span>Sold by Company</div>
+    <div class="leg-row"><span class="swatch" style="background:#00bfff;border:1px solid #0099cc;"></span>Sold by Channel Partner</div>
     <div class="leg-row"><span class="swatch" style="background:var(--green);"></span>Park &amp; Green Belt</div>
     <div class="leg-row"><span class="swatch" style="background:#1f6f4a;"></span>Sports / Gym Zone</div>
     <div class="leg-row"><span class="swatch" style="background:var(--road);"></span>Internal Road</div>
@@ -187,106 +192,111 @@ let bx0=1e9,by0=1e9,bx1=-1e9,by1=-1e9;
 
 /* ============================= PLOT DATA ============================= */
 const plotData = {
-  1: { width: 21.88294, depth: 50.4587, marla: 124.9953, sqyd: 217.1566, tags: "FRONT + PARK", status: "sold" },
-  2: { width: 22.64, depth: 50.46, marla: 126.87, sqyd: 220.4176, tags: "FRONT + PARK", status: "sold" },
-  3: { width: 22.64, depth: 50.46, marla: 126.87, sqyd: 220.4176, tags: "FRONT + PARK", status: "available" },
-  4: { width: 22.63752, depth: 50.46, marla: 126.87, sqyd: 220.4176, tags: "FRONT + PARK", status: "available" },
-  5: { width: 22.63752, depth: 50.46, marla: 126.87, sqyd: 220.4176, tags: "FRONT + PARK", status: "sold" },
-  6: { width: 27.36187, depth: 50.46, marla: 144.65, sqyd: 251.3035, tags: "FRONT + CORNER + ROAD +", status: "available" },
-  7: { width: 24.08107, depth: 50.46, marla: 125.71, sqyd: 218.4028, tags: "FRONT + CORNER + ROAD +", status: "sold" },
-  8: { width: 22.50629, depth: 50.46, marla: 126.13, sqyd: 219.1298, tags: "FRONT + PARK", status: "available" },
-  9: { width: 22.50629, depth: 50.46, marla: 126.13, sqyd: 219.1298, tags: "FRONT + PARK", status: "available" },
-  10: { width: 22.50629, depth: 50.46, marla: 126.13, sqyd: 219.1298, tags: "FRONT + PARK", status: "sold" },
-  11: { width: 22.50629, depth: 50.46, marla: 126.13, sqyd: 219.1298, tags: "FRONT + PARK", status: "available" },
-  12: { width: 21.7517, depth: 50.46, marla: 132.81, sqyd: 230.7406, tags: "FRONT + PARK", status: "sold" },
-  13: { width: 29.5272, depth: 39.37, marla: 119.87, sqyd: 208.246, tags: "CORNER + ROAD", status: "available" },
-  14: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "ROAD", status: "sold" },
-  15: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "ROAD", status: "available" },
-  16: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "ROAD", status: "available" },
-  17: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "ROAD", status: "sold" },
-  18: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "ROAD", status: "available" },
-  19: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "ROAD", status: "sold" },
-  20: { width: 26.2464, depth: 39.37, marla: 105.52, sqyd: 183.3213, tags: "CORNER + ROAD", status: "available" },
-  21: { width: 29.5272, depth: 32.81, marla: 102.4, sqyd: 177.9002, tags: "CORNER", status: "sold" },
-  22: { width: 19.6848, depth: 32.81, marla: 71.73, sqyd: 124.6236, tags: "N.A.", status: "available" },
-  23: { width: 19.6848, depth: 32.81, marla: 71.73, sqyd: 124.6236, tags: "N.A.", status: "available" },
-  24: { width: 19.6848, depth: 32.81, marla: 71.73, sqyd: 124.6236, tags: "N.A.", status: "sold" },
-  25: { width: 19.6848, depth: 32.81, marla: 71.73, sqyd: 124.6236, tags: "N.A.", status: "available" },
-  26: { width: 19.6848, depth: 32.81, marla: 71.73, sqyd: 124.6236, tags: "N.A.", status: "available" },
-  27: { width: 19.6848, depth: 32.81, marla: 71.73, sqyd: 124.6236, tags: "N.A.", status: "sold" },
-  28: { width: 19.6848, depth: 32.81, marla: 71.73, sqyd: 124.6236, tags: "N.A.", status: "available" },
-  29: { width: 19.6848, depth: 32.81, marla: 71.73, sqyd: 124.6236, tags: "N.A.", status: "available" },
-  30: { width: 26.2464, depth: 32.81, marla: 90.44, sqyd: 157.1296, tags: "CORNER", status: "sold" },
-  31: { width: 19.6848, depth: 35.76, marla: 74.66, sqyd: 129.7124, tags: "CORNER", status: "available" },
-  32: { width: 22.9656, depth: 33.99, marla: 88.95, sqyd: 154.5332, tags: "N.A.", status: "available" },
-  33: { width: 22.9656, depth: 33.27, marla: 85.57, sqyd: 148.6552, tags: "N.A.", status: "sold" },
-  34: { width: 22.9656, depth: 33, marla: 84.53, sqyd: 146.8481, tags: "N.A.", status: "available" },
-  35: { width: 22.9656, depth: 33.27, marla: 83.86, sqyd: 145.685, tags: "N.A.", status: "available" },
-  36: { width: 22.9656, depth: 32.74, marla: 83.19, sqyd: 144.5218, tags: "N.A.", status: "sold" },
-  37: { width: 22.9656, depth: 32.48, marla: 82.52, sqyd: 143.3587, tags: "N.A.", status: "available" },
-  38: { width: 22.9656, depth: 32.22, marla: 81.85, sqyd: 142.1955, tags: "N.A.", status: "available" },
-  39: { width: 32.808, depth: 31.95, marla: 115.79, sqyd: 201.1632, tags: "N.A.", status: "sold" },
-  40: { width: 24.606, depth: 39.37, marla: 98.35, sqyd: 170.8589, tags: "CORNER + ROAD", status: "available" },
-  41: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "ROAD", status: "sold" },
-  42: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "ROAD", status: "available" },
-  43: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "ROAD", status: "available" },
-  44: { width: 24.606, depth: 39.37, marla: 98.35, sqyd: 170.8589, tags: "CORNER + ROAD", status: "sold" },
-  45: { width: 24.606, depth: 39.37, marla: 102.4, sqyd: 177.9002, tags: "CORNER", status: "available" },
-  46: { width: 24.606, depth: 39.01, marla: 106.61, sqyd: 185.2114, tags: "N.A.", status: "available" },
-  47: { width: 24.606, depth: 38.65, marla: 105.63, sqyd: 183.5082, tags: "N.A.", status: "sold" },
-  48: { width: 24.606, depth: 38.29, marla: 104.64, sqyd: 181.7843, tags: "N.A.", status: "available" },
-  49: { width: 24.606, depth: 37.96, marla: 98.54, sqyd: 171.1913, tags: "CORNER", status: "available" },
-  50: { width: 24.606, depth: 39.37, marla: 102.4, sqyd: 177.9002, tags: "CORNER", status: "sold" },
-  51: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "available" },
-  52: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "sold" },
-  53: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "available" },
-  54: { width: 24.606, depth: 39.37, marla: 102.4, sqyd: 177.9002, tags: "CORNER", status: "available" },
-  55: { width: 20.57062, depth: 39.37, marla: 88.75, sqyd: 154.1801, tags: "N.A.", status: "sold" },
-  56: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "available" },
-  57: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "available" },
-  58: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "sold" },
-  59: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "available" },
-  60: { width: 24.606, depth: 39.37, marla: 98.35, sqyd: 170.8589, tags: "CORNER + ROAD", status: "sold" },
-  61: { width: 24.606, depth: 39.37, marla: 98.35, sqyd: 170.8589, tags: "CORNER + ROAD", status: "available" },
-  62: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "available" },
-  63: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "sold" },
-  64: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "available" },
-  65: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "available" },
-  66: { width: 24.606, depth: 39.37, marla: 98.35, sqyd: 170.8589, tags: "N.A.", status: "sold" },
-  67: { width: 22.01417, depth: 39.37, marla: 95.09, sqyd: 165.2093, tags: "N.A.", status: "available" },
-  68: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "available" },
-  69: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "sold" },
-  70: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "available" },
-  71: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "available" },
-  72: { width: 24.606, depth: 39.37, marla: 98.35, sqyd: 170.8589, tags: "CORNER + ROAD", status: "sold" },
-  73: { width: 27.8868, depth: 39.37, marla: 112.69, sqyd: 195.7836, tags: "CORNER + ROAD", status: "available" },
-  74: { width: 22.9656, depth: 39.37, marla: 100.43, sqyd: 174.473, tags: "N.A.", status: "sold" },
-  75: { width: 22.9656, depth: 39.37, marla: 100.43, sqyd: 174.473, tags: "N.A.", status: "available" },
-  76: { width: 22.9656, depth: 39.37, marla: 100.43, sqyd: 174.473, tags: "PARK", status: "available" },
-  77: { width: 54.1332, depth: 30.97, marla: 188.18, sqyd: 326.9292, tags: "PARK", status: "sold" },
-  78: { width: 37.07304, depth: 30.28, marla: 83.22, sqyd: 144.5841, tags: "PARK", status: "available" },
-  79: { width: 22.9656, depth: 39.37, marla: 100.43, sqyd: 174.473, tags: "PARK", status: "available" },
-  80: { width: 22.9656, depth: 39.37, marla: 100.43, sqyd: 174.473, tags: "N.A.", status: "sold" },
-  81: { width: 27.8868, depth: 39.37, marla: 112.69, sqyd: 195.7836, tags: "CORNER + ROAD", status: "available" },
-  82: { width: 24.606, depth: 39.37, marla: 98.35, sqyd: 170.8589, tags: "CORNER + ROAD", status: "available" },
-  83: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "sold" },
-  84: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "available" },
-  85: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "available" },
-  86: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "sold" },
-  87: { width: 22.01417, depth: 39.37, marla: 97.47, sqyd: 169.3427, tags: "N.A.", status: "available" },
-  88: { width: 22.5391, depth: 39.37, marla: 99.31, sqyd: 172.5413, tags: "N.A.", status: "available" },
-  89: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "sold" },
-  90: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "available" },
-  91: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "available" },
-  92: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "sold" },
-  93: { width: 24.606, depth: 39.37, marla: 98.35, sqyd: 170.8589, tags: "CORNER + ROAD", status: "available" },
-  94: { width: 24.606, depth: 39.37, marla: 98.35, sqyd: 170.8589, tags: "CORNER + ROAD", status: "available" },
-  95: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "sold" },
-  96: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "available" },
-  97: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "available" },
-  98: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "sold" },
-  99: { width: 22.5391, depth: 39.37, marla: 97.88, sqyd: 170.0489, tags: "N.A.", status: "available" },
-  100: { width: 24.606, depth: 39.37, marla: 98.35, sqyd: 170.8589, tags: "CORNER + ROAD", status: "sold" },
+  1: { width: 21.88294, depth: 50.4587, marla: 124.9953, sqyd: 217.1566, tags: "FRONT + PARK", status: "reserved" },
+  2: { width: 22.64, depth: 50.46, marla: 126.87, sqyd: 220.4176, tags: "FRONT + PARK", status: "reserved" },
+  3: { width: 22.64, depth: 50.46, marla: 126.87, sqyd: 220.4176, tags: "FRONT + PARK", status: "reserved" },
+  4: { width: 22.63752, depth: 50.46, marla: 126.87, sqyd: 220.4176, tags: "FRONT + PARK", status: "reserved" },
+  5: { width: 22.63752, depth: 50.46, marla: 126.87, sqyd: 220.4176, tags: "FRONT + PARK", status: "reserved" },
+  6: { width: 27.36187, depth: 50.46, marla: 144.65, sqyd: 251.3035, tags: "FRONT + CORNER + ROAD +", status: "reserved" },
+  7: { width: 24.08107, depth: 50.46, marla: 125.71, sqyd: 218.4028, tags: "FRONT + CORNER + ROAD +", status: "reserved" },
+  8: { width: 22.50629, depth: 50.46, marla: 126.13, sqyd: 219.1298, tags: "FRONT + PARK", status: "reserved" },
+  9: { width: 22.50629, depth: 50.46, marla: 126.13, sqyd: 219.1298, tags: "FRONT + PARK", status: "reserved" },
+  10: { width: 22.50629, depth: 50.46, marla: 126.13, sqyd: 219.1298, tags: "FRONT + PARK", status: "reserved" },
+  11: { width: 22.50629, depth: 50.46, marla: 126.13, sqyd: 219.1298, tags: "FRONT + PARK", status: "reserved" },
+  12: { width: 21.7517, depth: 50.46, marla: 132.81, sqyd: 230.7406, tags: "FRONT + PARK", status: "reserved" },
+  13: { width: 29.5272, depth: 39.37, marla: 119.87, sqyd: 208.246, tags: "CORNER + ROAD", status: "sold-company" },
+  14: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "ROAD", status: "sold-company" },
+  15: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "ROAD", status: "sold-company" },
+  16: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "ROAD", status: "sold-company" },
+  17: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "ROAD", status: "sold-company" },
+  18: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "ROAD", status: "sold-company" },
+  19: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "ROAD", status: "sold-company" },
+  20: { width: 26.2464, depth: 39.37, marla: 105.52, sqyd: 183.3213, tags: "CORNER + ROAD", status: "sold-company" },
+  21: { width: 29.5272, depth: 32.81, marla: 102.4, sqyd: 177.9002, tags: "CORNER", status: "sold-company" },
+  22: { width: 19.6848, depth: 32.81, marla: 71.73, sqyd: 124.6236, tags: "N.A.", status: "sold-company" },
+  23: { width: 19.6848, depth: 32.81, marla: 71.73, sqyd: 124.6236, tags: "N.A.", status: "sold-company" },
+  24: { width: 19.6848, depth: 32.81, marla: 71.73, sqyd: 124.6236, tags: "N.A.", status: "sold-company" },
+  25: { width: 19.6848, depth: 32.81, marla: 71.73, sqyd: 124.6236, tags: "N.A.", status: "reserved" },
+  26: { width: 19.6848, depth: 32.81, marla: 71.73, sqyd: 124.6236, tags: "N.A.", status: "reserved" },
+  27: { width: 19.6848, depth: 32.81, marla: 71.73, sqyd: 124.6236, tags: "N.A.", status: "reserved" },
+  28: { width: 19.6848, depth: 32.81, marla: 71.73, sqyd: 124.6236, tags: "N.A.", status: "reserved" },
+  29: { width: 19.6848, depth: 32.81, marla: 71.73, sqyd: 124.6236, tags: "N.A.", status: "reserved" },
+  30: { width: 26.2464, depth: 32.81, marla: 90.44, sqyd: 157.1296, tags: "CORNER", status: "sold-company" },
+  31: { width: 19.6848, depth: 35.76, marla: 74.66, sqyd: 129.7124, tags: "CORNER", status: "sold-company" },
+  32: { width: 22.9656, depth: 33.99, marla: 88.95, sqyd: 154.5332, tags: "N.A.", status: "sold-company" },
+  33: { width: 22.9656, depth: 33.27, marla: 85.57, sqyd: 148.6552, tags: "N.A.", status: "sold-company" },
+  34: { width: 22.9656, depth: 33, marla: 84.53, sqyd: 146.8481, tags: "N.A.", status: "sold-company" },
+  35: { width: 22.9656, depth: 33.27, marla: 83.86, sqyd: 145.685, tags: "N.A.", status: "sold-company" },
+  36: { width: 22.9656, depth: 32.74, marla: 83.19, sqyd: 144.5218, tags: "N.A.", status: "sold-company" },
+  37: { width: 22.9656, depth: 32.48, marla: 82.52, sqyd: 143.3587, tags: "N.A.", status: "sold-company" },
+  38: { width: 22.9656, depth: 32.22, marla: 81.85, sqyd: 142.1955, tags: "N.A.", status: "sold-company" },
+  39: { width: 32.808, depth: 31.95, marla: 115.79, sqyd: 201.1632, tags: "N.A.", status: "sold-company" },
+  40: { width: 24.606, depth: 39.37, marla: 98.35, sqyd: 170.8589, tags: "CORNER + ROAD", status: "sold-company" },
+  41: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "ROAD", status: "sold-company" },
+  42: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "ROAD", status: "sold-company" },
+  43: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "ROAD", status: "sold-company" },
+  44: { width: 24.606, depth: 39.37, marla: 98.35, sqyd: 170.8589, tags: "CORNER + ROAD", status: "sold-company" },
+  45: { width: 24.606, depth: 39.37, marla: 102.4, sqyd: 177.9002, tags: "CORNER", status: "sold-company" },
+  46: { width: 24.606, depth: 39.01, marla: 106.61, sqyd: 185.2114, tags: "N.A.", status: "sold-company" },
+  47: { width: 24.606, depth: 38.65, marla: 105.63, sqyd: 183.5082, tags: "N.A.", status: "sold-company" },
+  48: { width: 24.606, depth: 38.29, marla: 104.64, sqyd: 181.7843, tags: "N.A.", status: "sold-company" },
+  49: { width: 24.606, depth: 37.96, marla: 98.54, sqyd: 171.1913, tags: "CORNER", status: "sold-company" },
+  50: { width: 24.606, depth: 39.37, marla: 102.4, sqyd: 177.9002, tags: "CORNER", status: "sold-company" },
+  51: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "sold-company" },
+  52: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "sold-partner" },
+  53: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "sold-company" },
+  54: { width: 24.606, depth: 39.37, marla: 102.4, sqyd: 177.9002, tags: "CORNER", status: "sold-company" },
+  55: { width: 20.57062, depth: 39.37, marla: 88.75, sqyd: 154.1801, tags: "N.A.", status: "sold-partner" },
+  56: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "sold-company" },
+  57: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "sold-company" },
+  58: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "sold-partner" },
+  59: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "sold-company" },
+  60: { width: 24.606, depth: 39.37, marla: 98.35, sqyd: 170.8589, tags: "CORNER + ROAD", status: "sold-company" },
+  61: { width: 24.606, depth: 39.37, marla: 98.35, sqyd: 170.8589, tags: "CORNER + ROAD", status: "sold-company" },
+  62: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "sold-company" },
+  63: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "sold-partner" },
+  64: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "sold-company" },
+  65: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "sold-company" },
+  66: { width: 24.606, depth: 39.37, marla: 98.35, sqyd: 170.8589, tags: "N.A.", status: "sold-partner" },
+  67: { width: 22.01417, depth: 39.37, marla: 95.09, sqyd: 165.2093, tags: "N.A.", status: "sold-company" },
+  68: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "sold-company" },
+  69: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "sold-partner" },
+  70: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "sold-company" },
+  71: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "sold-company" },
+  72: { width: 24.606, depth: 39.37, marla: 98.35, sqyd: 170.8589, tags: "CORNER + ROAD", status: "sold-company" },
+  73: { width: 27.8868, depth: 39.37, marla: 112.69, sqyd: 195.7836, tags: "CORNER + ROAD", status: "sold-company" },
+  74: { width: 22.9656, depth: 39.37, marla: 100.43, sqyd: 174.473, tags: "N.A.", status: "sold-company" },
+  75: { width: 22.9656, depth: 39.37, marla: 100.43, sqyd: 174.473, tags: "N.A.", status: "sold-company" },
+  76: { width: 22.9656, depth: 39.37, marla: 100.43, sqyd: 174.473, tags: "PARK", status: "sold-company" },
+  77: { width: 54.1332, depth: 30.97, marla: 188.18, sqyd: 326.9292, tags: "PARK", status: "reserved" },
+  78: { width: 37.07304, depth: 30.28, marla: 83.22, sqyd: 144.5841, tags: "PARK", status: "reserved" },
+  79: { width: 22.9656, depth: 39.37, marla: 100.43, sqyd: 174.473, tags: "PARK", status: "sold-company" },
+  80: { width: 22.9656, depth: 39.37, marla: 100.43, sqyd: 174.473, tags: "N.A.", status: "sold-company" },
+  81: { width: 27.8868, depth: 39.37, marla: 112.69, sqyd: 195.7836, tags: "CORNER + ROAD", status: "sold-company" },
+  82: { width: 24.606, depth: 39.37, marla: 98.35, sqyd: 170.8589, tags: "CORNER + ROAD", status: "sold-company" },
+  83: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "sold-partner" },
+  84: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "sold-company" },
+  85: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "sold-company" },
+  86: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "sold-partner" },
+  87: { width: 22.01417, depth: 39.37, marla: 97.47, sqyd: 169.3427, tags: "N.A.", status: "sold-company" },
+  88: { width: 22.5391, depth: 39.37, marla: 99.31, sqyd: 172.5413, tags: "N.A.", status: "sold-company" },
+  89: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "sold-partner" },
+  90: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "sold-company" },
+  91: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "sold-company" },
+  92: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "sold-partner" },
+  93: { width: 24.606, depth: 39.37, marla: 98.35, sqyd: 170.8589, tags: "CORNER + ROAD", status: "sold-company" },
+  94: { width: 24.606, depth: 39.37, marla: 98.35, sqyd: 170.8589, tags: "CORNER + ROAD", status: "sold-company" },
+  95: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "sold-company" },
+  96: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "sold-company" },
+  97: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "sold-company" },
+  98: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "N.A.", status: "sold-company" },
+  99: { width: 22.5391, depth: 39.37, marla: 97.88, sqyd: 170.0489, tags: "N.A.", status: "sold-company" },
+  100: { width: 24.606, depth: 39.37, marla: 98.35, sqyd: 170.8589, tags: "CORNER + ROAD", status: "sold-company" },
+  101: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "ROAD", status: "sold-company" },
+  102: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "ROAD", status: "sold-company" },
+  103: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "ROAD", status: "sold-company" },
+  104: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "ROAD", status: "reserved" },
+  105: { width: 24.606, depth: 39.37, marla: 98.35, sqyd: 170.8589, tags: "CORNER + ROAD", status: "reserved" },
   101: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "ROAD" },
   102: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "ROAD" },
   103: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "ROAD" },
@@ -390,10 +400,17 @@ const plotData = {
 };
 
 // Auto-assign status to plots that don't have one (for demo purposes)
+// Based on spreadsheet: ~30% reserved (yellow), ~50% sold-company (green), ~20% sold-partner (blue)
 Object.keys(plotData).forEach(plotNum => {
   if (!plotData[plotNum].status) {
-    // Randomly assign ~40% sold, 60% available
-    plotData[plotNum].status = Math.random() < 0.4 ? 'sold' : 'available';
+    const rand = Math.random();
+    if (rand < 0.10) {
+      plotData[plotNum].status = 'reserved';
+    } else if (rand < 0.70) {
+      plotData[plotNum].status = 'sold-company';
+    } else {
+      plotData[plotNum].status = 'sold-partner';
+    }
   }
 });
 
@@ -728,28 +745,30 @@ function toggleStatus() {
   
   if (statusViewEnabled) {
     // Apply status colors
-    let soldCount = 0, availableCount = 0;
+    let reservedCount = 0, soldCompanyCount = 0, soldPartnerCount = 0;
     
     Object.keys(plotData).forEach(plotNum => {
       const plotEl = document.getElementById(`plot-${plotNum}`);
       const data = plotData[plotNum];
       
       if (plotEl && data) {
-        plotEl.classList.remove('sold', 'available');
+        plotEl.classList.remove('reserved', 'sold-company', 'sold-partner');
         plotEl.classList.add(data.status);
         
-        if (data.status === 'sold') soldCount++;
-        else if (data.status === 'available') availableCount++;
+        if (data.status === 'reserved') reservedCount++;
+        else if (data.status === 'sold-company') soldCompanyCount++;
+        else if (data.status === 'sold-partner') soldPartnerCount++;
       }
     });
     
-    document.getElementById('soldCount').textContent = soldCount;
-    document.getElementById('availableCount').textContent = availableCount;
+    document.getElementById('reservedCount').textContent = reservedCount;
+    document.getElementById('soldCompanyCount').textContent = soldCompanyCount;
+    document.getElementById('soldPartnerCount').textContent = soldPartnerCount;
     statusStats.classList.add('show');
   } else {
     // Remove status colors
     document.querySelectorAll('.plot').forEach(el => {
-      el.classList.remove('sold', 'available');
+      el.classList.remove('reserved', 'sold-company', 'sold-partner');
     });
     statusStats.classList.remove('show');
   }
@@ -784,8 +803,18 @@ document.querySelectorAll('.plot-g').forEach(plotGroup => {
       : '<span class="tag">RESIDENTIAL</span>';
     
     // Add status tag
-    const statusText = data.status === 'sold' ? 'SOLD' : 'AVAILABLE';
-    const statusClass = `status-${data.status}`;
+    let statusText = '';
+    let statusClass = '';
+    if (data.status === 'reserved') {
+      statusText = 'RESERVED BY COMPANY';
+      statusClass = 'status-reserved';
+    } else if (data.status === 'sold-company') {
+      statusText = 'SOLD BY COMPANY';
+      statusClass = 'status-sold-company';
+    } else if (data.status === 'sold-partner') {
+      statusText = 'SOLD BY CHANNEL PARTNER';
+      statusClass = 'status-sold-partner';
+    }
     tagsHTML += `<span class="tag ${statusClass}">${statusText}</span>`;
     
     ttTags.innerHTML = tagsHTML;
