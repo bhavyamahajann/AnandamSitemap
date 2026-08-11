@@ -323,7 +323,7 @@ let y = 70;
   world.push(roadLabel(block1X+b1.w/2, row1Y+PH+40, '7.50 MTR ROAD'));
   world.push(roadLabel(block2X+b2.w/2, row1Y+PH+40, '7.50 MTR ROAD'));
   
-  y += PH + ROAD_GAP;
+  y += PH + 45; // Reduced gap from ROAD_GAP (76) to 45
 }
 
 // SECTION 2 : Below ONLY 174-179 block - with proper vertical alignment
