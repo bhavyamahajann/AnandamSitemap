@@ -111,11 +111,6 @@ const plotData = {
   103: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "ROAD", status: "sold-company" },
   104: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "ROAD", status: "reserved" },
   105: { width: 24.606, depth: 39.37, marla: 98.35, sqyd: 170.8589, tags: "CORNER + ROAD", status: "reserved" },
-  101: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "ROAD" },
-  102: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "ROAD" },
-  103: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "ROAD" },
-  104: { width: 24.606, depth: 39.37, marla: 107.6, sqyd: 186.9354, tags: "ROAD" },
-  105: { width: 24.606, depth: 39.37, marla: 98.35, sqyd: 170.8589, tags: "CORNER + ROAD" },
   106: { width: 24.606, depth: 32.81, marla: 78.49, sqyd: 136.359, tags: "CORNER" },
   107: { width: 19.6848, depth: 32.81, marla: 71.73, sqyd: 124.6236, tags: "N.A." },
   108: { width: 19.6848, depth: 32.81, marla: 71.73, sqyd: 124.6236, tags: "N.A." },
@@ -310,61 +305,74 @@ const block21=[7,8,9,10,11,12];
 /* ---------- Compose layout ---------- */
 let y = 70;
 
-// SECTION 1 : top cul-de-sac and plots 174-200
+// SECTION 1 : Top section with proper alignment
 {
-  let x = MARGIN;
-  const b1 = rowBlock(x, y, block1); world.push(b1.svg);
-  x += b1.w + 70;
-  world.push(node(x+22, y+18, 'B'));
-  x += 90;
+  // Row 1: blocks 167-173 and 174-179 on same Y level
+  const row1Y = y;
+  const block1X = MARGIN;
+  const b1 = rowBlock(block1X, row1Y, block1); 
+  world.push(b1.svg);
   
-  // Top row: plots 174-179
-  const topRowY = y;
-  const b2 = rowBlock(x, topRowY, block2); world.push(b2.svg);
+  const nodeX = block1X + b1.w + 70;
+  world.push(node(nodeX+22, row1Y+18, 'B'));
   
-  world.push(roadLabel(MARGIN+b1.w/2, topRowY+PH+40, '7.50 MTR ROAD'));
-  world.push(roadLabel(x+b2.w/2, topRowY+PH+40, '7.50 MTR ROAD'));
+  const block2X = nodeX + 90;
+  const b2 = rowBlock(block2X, row1Y, block2); 
+  world.push(b2.svg);
   
-  // Below 174-179: Create the container area
-  const containerY = topRowY + PH + ROAD_GAP;
-  let containerX = x;
+  world.push(roadLabel(block1X+b1.w/2, row1Y+PH+40, '7.50 MTR ROAD'));
+  world.push(roadLabel(block2X+b2.w/2, row1Y+PH+40, '7.50 MTR ROAD'));
   
-  // Left side: block6 (194-200 left column, 193-187 right column) as grid2col
-  const b6 = grid2col(containerX, containerY, block6L, block6R); 
-  world.push(b6.svg);
-  
-  // Right side: rightCol1 (180-186) as vertical column
-  containerX += b6.w + LANE_GAP;
-  const rc1 = colBlock(containerX, containerY, rightCol1); 
-  world.push(rc1.svg);
-  
-  y += PH + ROAD_GAP + Math.max(b6.h, rc1.h) + ROAD_GAP;
+  y += PH + ROAD_GAP;
 }
 
-// SECTION 2 : four lanes (left column, park cluster)
+// SECTION 2 : Below top row - with proper vertical alignment
 {
   const laneY = y;
-  let x = MARGIN;
-  const lc1 = colBlock(x, laneY, leftCol1); world.push(lc1.svg);
+  
+  // Left column (166-154) - ALIGNED with block1 (167-173)
+  const leftColX = MARGIN;
+  const lc1 = colBlock(leftColX, laneY, leftCol1); 
+  world.push(lc1.svg);
 
-  x += lc1.w + LANE_GAP;
-  const p4 = grid2col(x, laneY, block4L, block4R); world.push(p4.svg);
-  // park island
-  const parkY = laneY + p4.h + 26, parkH = 190;
-  world.push(hedge(x, parkY, p4.w, parkH, 10).replace('class="hedge"','class="hedge" style="fill:var(--green)"'));
-  world.push(`<ellipse cx="${x+p4.w*0.62}" cy="${parkY+parkH*0.55}" rx="46" ry="34" fill="var(--pond)" opacity="0.9"/>`);
-  world.push(`<path d="M ${x+14} ${parkY+30} Q ${x+p4.w*0.4} ${parkY+70} ${x+14} ${parkY+parkH-20}" stroke="#e7e2d6" stroke-width="2" fill="none" stroke-dasharray="3 5" opacity="0.6"/>`);
-  world.push(`<circle cx="${x+34}" cy="${parkY+38}" r="9" fill="#e7e2d6" opacity="0.5"/>`);
-  world.push(`<text x="${x+p4.w/2}" y="${parkY+parkH-14}" class="amenity-label">PARK</text>`);
-  world.push(`<text x="${x+p4.w/2}" y="${parkY+16}" class="amenity-sub">Landscaped Green &amp; Pond</text>`);
-  track(x,parkY,p4.w,parkH);
+  // Middle area - blocks 143-142 etc with park
+  const midX = leftColX + lc1.w + LANE_GAP;
+  const p4 = grid2col(midX, laneY, block4L, block4R); 
+  world.push(p4.svg);
+  
+  // Park island below p4
+  const parkY = laneY + p4.h + 26;
+  const parkH = 190;
+  world.push(hedge(midX, parkY, p4.w, parkH, 10).replace('class="hedge"','class="hedge" style="fill:var(--green)"'));
+  world.push(`<ellipse cx="${midX+p4.w*0.62}" cy="${parkY+parkH*0.55}" rx="46" ry="34" fill="var(--pond)" opacity="0.9"/>`);
+  world.push(`<path d="M ${midX+14} ${parkY+30} Q ${midX+p4.w*0.4} ${parkY+70} ${midX+14} ${parkY+parkH-20}" stroke="#e7e2d6" stroke-width="2" fill="none" stroke-dasharray="3 5" opacity="0.6"/>`);
+  world.push(`<circle cx="${midX+34}" cy="${parkY+38}" r="9" fill="#e7e2d6" opacity="0.5"/>`);
+  world.push(`<text x="${midX+p4.w/2}" y="${parkY+parkH-14}" class="amenity-label">PARK</text>`);
+  world.push(`<text x="${midX+p4.w/2}" y="${parkY+16}" class="amenity-sub">Landscaped Green &amp; Pond</text>`);
+  track(midX, parkY, p4.w, parkH);
 
+  // Below park - blocks 149-153, 136-132
   const p5y = parkY + parkH + 26;
-  const p5 = grid2col(x, p5y, block5L, block5R); world.push(p5.svg);
+  const p5 = grid2col(midX, p5y, block5L, block5R); 
+  world.push(p5.svg);
 
-  world.push(roadLabelV(MARGIN + lc1.w + LANE_GAP/2, laneY + 160, '7.50 MTR ROAD'));
+  // Middle-right area - blocks 194-200, 193-187
+  const midRightX = midX + p4.w + LANE_GAP;
+  const b6 = grid2col(midRightX, laneY, block6L, block6R); 
+  world.push(b6.svg);
 
-  const sectionH = Math.max(lc1.h, p5y - laneY + p5.h);
+  // Right column (180-186) - Calculate X to align with block2 (174-179)
+  // block2 starts at block2X, plot 174 is at block2X
+  // Plot 180 should align with around plot 177-178 area
+  // block2X + (3 plots * PW + 3 gaps) gives us around plot 177 position
+  const rightColX = midRightX + b6.w + LANE_GAP;
+  const rc1 = colBlock(rightColX, laneY, rightCol1); 
+  world.push(rc1.svg);
+
+  world.push(roadLabelV(midX - LANE_GAP/2, laneY + 160, '7.50 MTR ROAD'));
+  world.push(roadLabel(midRightX + b6.w/2, laneY - 22, '7.50 MTR ROAD'));
+
+  const sectionH = Math.max(lc1.h, p5y - laneY + p5.h, b6.h, rc1.h);
   y = laneY + sectionH + ROAD_GAP;
 }
 
