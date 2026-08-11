@@ -368,9 +368,10 @@ let y = 70;
   world.push(`<text x="${midX+p4.w/2}" y="${parkY+16}" class="amenity-sub">Landscaped Green &amp; Pond</text>`);
   track(midX, parkY, p4.w, parkH);
 
-  // Block8 (131-126, 120-125) positioned BELOW the middle section with proper gap
+  // Block8 (131-126, 120-125) positioned BELOW the right columns with proper gap
   const block8X = midX + p4.w + LANE_GAP;
-  const block8Y = laneY + p4.h + 40; // Position below 143-142 section with gap
+  const rightSectionMaxH = Math.max(b6.h, rc1.h);
+  const block8Y = laneY + rightSectionMaxH + 60; // Position below right columns with proper gap
   const b8 = grid2row(block8X, block8Y, block8Top, block8Bot); 
   world.push(b8.svg);
   world.push(roadLabel(block8X + b8.w/2, block8Y - 20, '7.50 MTR ROAD'));
