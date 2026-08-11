@@ -341,8 +341,9 @@ let y = 70;
   const lc1 = colBlock(leftColX, laneY, leftCol1); 
   world.push(lc1.svg);
 
-  // Middle area - blocks 143-142 etc
-  const midX = leftColX + lc1.w + LANE_GAP;
+  // Middle area - blocks 143-142 positioned below plots 172-173
+  const plot172X = block1X + (5 * (PW + GAP)); // Plot 172 is 6th plot (0-indexed: 5)
+  const midX = plot172X;
   const p4 = grid2col(midX, laneY, block4L, block4R); 
   world.push(p4.svg);
   
