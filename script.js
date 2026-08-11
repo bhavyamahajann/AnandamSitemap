@@ -313,10 +313,10 @@ let y = 70;
   const b1 = rowBlock(block1X, row1Y, block1); 
   world.push(b1.svg);
   
-  const nodeX = block1X + b1.w + 70;
+  const nodeX = block1X + b1.w + 35; // Reduced from 70 to 35
   world.push(node(nodeX+22, row1Y+18, 'B'));
   
-  const block2X = nodeX + 90;
+  const block2X = nodeX + 70; // Reduced from 90 to 70
   const b2 = rowBlock(block2X, row1Y, block2); 
   world.push(b2.svg);
   
@@ -333,8 +333,8 @@ let y = 70;
   // Calculate X positions
   const block1X = MARGIN;
   const block1W = PW * 7 + GAP * 6;
-  const nodeX = block1X + block1W + 70;
-  const block2X = nodeX + 90;
+  const nodeX = block1X + block1W + 35; // Match section 1
+  const block2X = nodeX + 70; // Match section 1
   
   // Left column (166-154) - ALIGNED with block1 (167-173)
   const leftColX = MARGIN;
