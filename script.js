@@ -396,16 +396,14 @@ let y = 70;
   const c10 = colBlock(col10X, col10Y, col10); 
   world.push(c10.svg);
 
-  const sectionH = Math.max(lc1.h, b6.h, rc1.h, p5y - laneY + p5.h, block8Y - laneY + b8.h, col10Y - laneY + c10.h);
-  y = laneY + sectionH + ROAD_GAP;
-}
+  // Position block9 (105-112, 100-106) below plots 120-123
+  const plot120X = block8X; // Plot 120 is at the start of block8Bot
+  const b9X = plot120X;
+  const b9Y = block8Y + PH + RCORR + 60; // Below block8Bot with proper gap
+  const b9 = grid2col(b9X, b9Y, block9L, block9R); 
+  world.push(b9.svg);
 
-// SECTION 4 : block9 (irregular grid2col)
-{
-  const laneY = y;
-  let x = MARGIN;
-  const b9 = grid2col(x, laneY, block9L, block9R); world.push(b9.svg);
-  const sectionH = b9.h;
+  const sectionH = Math.max(lc1.h, b6.h, rc1.h, p5y - laneY + p5.h, block8Y - laneY + b8.h, col10Y - laneY + c10.h, b9Y - laneY + b9.h);
   y = laneY + sectionH + ROAD_GAP;
 }
 
