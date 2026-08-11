@@ -427,9 +427,9 @@ let y = 70;
   const b14 = colBlock(leftX, leftY + b13.h + 60, block14); 
   world.push(b14.svg);
   
-  // Position block15 below plots 58-60 (last 3 plots of block13Bot)
+  // Position block15 shifted right to align below plots 30-31 area
   const plot58X = leftX + (3 * (PW + GAP)); // Plot 58 is 4th plot (0-indexed: 3) in block13Bot row
-  const b15X = plot58X;
+  const b15X = plot58X + 100; // Shift right to align with plots 30-31
   const b15Y = leftY + b13.h + 60; // Below block13 with gap
   const b15 = grid2col(b15X, b15Y, block15L, block15R); 
   world.push(b15.svg);
