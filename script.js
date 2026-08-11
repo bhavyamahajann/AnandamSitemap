@@ -367,7 +367,7 @@ let y = 70;
   const p4 = grid2col(midX, laneY, block4L, block4R); 
   world.push(p4.svg);
   
-  // Park island below p4
+  // Park island at same level as p4
   const parkY = laneY + p4.h + 26;
   const parkH = 190;
   world.push(hedge(midX, parkY, p4.w, parkH, 10).replace('class="hedge"','class="hedge" style="fill:var(--green)"'));
@@ -378,6 +378,12 @@ let y = 70;
   world.push(`<text x="${midX+p4.w/2}" y="${parkY+16}" class="amenity-sub">Landscaped Green &amp; Pond</text>`);
   track(midX, parkY, p4.w, parkH);
 
+  // Block8 (131-126, 120-125) PARALLEL to PARK on the right
+  const block8X = midX + p4.w + LANE_GAP;
+  const b8 = grid2row(block8X, parkY, block8Top, block8Bot); 
+  world.push(b8.svg);
+  world.push(roadLabel(block8X + b8.w/2, parkY - 20, '7.50 MTR ROAD'));
+
   // Below park - blocks 149-153, 136-132
   const p5y = parkY + parkH + 26;
   const p5 = grid2col(midX, p5y, block5L, block5R); 
@@ -385,16 +391,8 @@ let y = 70;
 
   world.push(roadLabelV(midX - LANE_GAP/2, laneY + 160, '7.50 MTR ROAD'));
 
-  const sectionH = Math.max(lc1.h, p5y - laneY + p5.h);
+  const sectionH = Math.max(lc1.h, p5y - laneY + p5.h, parkY - laneY + Math.max(parkH, b8.h));
   y = laneY + sectionH + ROAD_GAP;
-}
-
-// SECTION 3 : block8 (row-grid) roughly centered
-{
-  let x = MARGIN + 260;
-  const b8 = grid2row(x, y, block8Top, block8Bot); world.push(b8.svg);
-  world.push(roadLabel(x + b8.w/2, y - 20, '7.50 MTR ROAD'));
-  y += b8.h + ROAD_GAP;
 }
 
 // SECTION 4 : block9 (irregular grid2col) + col10
