@@ -326,48 +326,38 @@ let y = 70;
   y += PH + 45; // Reduced gap from ROAD_GAP (76) to 45
 }
 
-// SECTION 2 : Below ONLY 174-179 block - with proper vertical alignment
+// SECTION 2 : Below 174-179 AND parallel to 166-154, 143-142 section
 {
   const laneY = y;
   
-  // Calculate X positions - align with block2 (174-179)
-  // block2X from previous section is not available here, so recalculate
+  // Calculate X positions
   const block1X = MARGIN;
-  const block1W = PW * 7 + GAP * 6; // width of block1
+  const block1W = PW * 7 + GAP * 6;
   const nodeX = block1X + block1W + 70;
   const block2X = nodeX + 90;
-  
-  // Left grid (194-193, 195-192, etc.) - positioned below block2 start
-  const leftGridX = block2X;
-  const b6 = grid2col(leftGridX, laneY, block6L, block6R); 
-  world.push(b6.svg);
-
-  // Right column (180-186) - positioned to the right of left grid
-  const rightColX = leftGridX + b6.w + LANE_GAP;
-  const rc1 = colBlock(rightColX, laneY, rightCol1); 
-  world.push(rc1.svg);
-
-  world.push(roadLabel(leftGridX + b6.w/2, laneY - 22, '7.50 MTR ROAD'));
-
-  const sectionH = Math.max(b6.h, rc1.h);
-  y = laneY + sectionH + ROAD_GAP;
-}
-
-// SECTION 3 : Left side (166-154) and middle area with park
-{
-  const laneY = y;
   
   // Left column (166-154) - ALIGNED with block1 (167-173)
   const leftColX = MARGIN;
   const lc1 = colBlock(leftColX, laneY, leftCol1); 
   world.push(lc1.svg);
 
-  // Middle area - blocks 143-142 etc with park
+  // Middle area - blocks 143-142 etc
   const midX = leftColX + lc1.w + LANE_GAP;
   const p4 = grid2col(midX, laneY, block4L, block4R); 
   world.push(p4.svg);
   
-  // Park island at same level as p4
+  // Right side - blocks 194-193, 180-186 (parallel to 166-154, 143-142)
+  const rightGridX = block2X;
+  const b6 = grid2col(rightGridX, laneY, block6L, block6R); 
+  world.push(b6.svg);
+
+  const rightColX = rightGridX + b6.w + LANE_GAP;
+  const rc1 = colBlock(rightColX, laneY, rightCol1); 
+  world.push(rc1.svg);
+
+  world.push(roadLabel(rightGridX + b6.w/2, laneY - 22, '7.50 MTR ROAD'));
+  
+  // Park island below p4
   const parkY = laneY + p4.h + 26;
   const parkH = 190;
   world.push(hedge(midX, parkY, p4.w, parkH, 10).replace('class="hedge"','class="hedge" style="fill:var(--green)"'));
@@ -391,7 +381,7 @@ let y = 70;
 
   world.push(roadLabelV(midX - LANE_GAP/2, laneY + 160, '7.50 MTR ROAD'));
 
-  const sectionH = Math.max(lc1.h, p5y - laneY + p5.h, parkY - laneY + Math.max(parkH, b8.h));
+  const sectionH = Math.max(lc1.h, b6.h, rc1.h, p5y - laneY + p5.h, parkY - laneY + Math.max(parkH, b8.h));
   y = laneY + sectionH + ROAD_GAP;
 }
 
