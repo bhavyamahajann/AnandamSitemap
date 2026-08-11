@@ -318,6 +318,10 @@ let y = 70;
   world.push(node(x+22, y+18, 'B'));
   x += 90;
   const b2 = rowBlock(x, y, block2); world.push(b2.svg);
+  
+  // Add rightCol1 (180-186) below block2 (178-179)
+  const rc1 = colBlock(x, y + PH + GAP, rightCol1); world.push(rc1.svg);
+  
   world.push(roadLabel(MARGIN+b1.w/2, y+PH+40, '7.50 MTR ROAD'));
   world.push(roadLabel(x+b2.w/2, y+PH+40, '7.50 MTR ROAD'));
   y += PH + ROAD_GAP;
@@ -347,13 +351,10 @@ let y = 70;
   x += p4.w + LANE_GAP;
   const b6 = grid2col(x, laneY, block6L, block6R); world.push(b6.svg);
 
-  x += b6.w + LANE_GAP;
-  const rc1 = colBlock(x, laneY, rightCol1); world.push(rc1.svg);
-
   world.push(roadLabelV(MARGIN + lc1.w + LANE_GAP/2, laneY + 160, '7.50 MTR ROAD'));
-  world.push(roadLabel(x - b6.w/2 - LANE_GAP/2, laneY - 22, '7.50 MTR ROAD'));
+  world.push(roadLabel(x + b6.w/2, laneY - 22, '7.50 MTR ROAD'));
 
-  const sectionH = Math.max(lc1.h, p5y - laneY + p5.h, b6.h, rc1.h);
+  const sectionH = Math.max(lc1.h, p5y - laneY + p5.h, b6.h);
   y = laneY + sectionH + ROAD_GAP;
 }
 
