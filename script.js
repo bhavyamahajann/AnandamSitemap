@@ -385,7 +385,7 @@ let y = 70;
 
   // Below park - blocks 149-153, 136-132
   const p5y = parkY + parkH + 26;
-  const p5 = grid2col(midX, p5y, block5L, block5R); 
+  const p5 = grid2col(midX, p5y, block5L, block5R, CORR, PW, 96); 
   world.push(p5.svg);
 
   world.push(roadLabelV(midX - LANE_GAP/2, laneY + 160, '7.50 MTR ROAD'));
