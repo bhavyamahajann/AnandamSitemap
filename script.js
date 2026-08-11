@@ -326,7 +326,34 @@ let y = 70;
   y += PH + ROAD_GAP;
 }
 
-// SECTION 2 : Below top row - with proper vertical alignment
+// SECTION 2 : Below ONLY 174-179 block - with proper vertical alignment
+{
+  const laneY = y;
+  
+  // Calculate X positions - align with block2 (174-179)
+  // block2X from previous section is not available here, so recalculate
+  const block1X = MARGIN;
+  const block1W = PW * 7 + GAP * 6; // width of block1
+  const nodeX = block1X + block1W + 70;
+  const block2X = nodeX + 90;
+  
+  // Left grid (194-193, 195-192, etc.) - positioned below block2 start
+  const leftGridX = block2X;
+  const b6 = grid2col(leftGridX, laneY, block6L, block6R); 
+  world.push(b6.svg);
+
+  // Right column (180-186) - positioned to the right of left grid
+  const rightColX = leftGridX + b6.w + LANE_GAP;
+  const rc1 = colBlock(rightColX, laneY, rightCol1); 
+  world.push(rc1.svg);
+
+  world.push(roadLabel(leftGridX + b6.w/2, laneY - 22, '7.50 MTR ROAD'));
+
+  const sectionH = Math.max(b6.h, rc1.h);
+  y = laneY + sectionH + ROAD_GAP;
+}
+
+// SECTION 3 : Left side (166-154) and middle area with park
 {
   const laneY = y;
   
@@ -356,23 +383,9 @@ let y = 70;
   const p5 = grid2col(midX, p5y, block5L, block5R); 
   world.push(p5.svg);
 
-  // Middle-right area - blocks 194-200, 193-187
-  const midRightX = midX + p4.w + LANE_GAP;
-  const b6 = grid2col(midRightX, laneY, block6L, block6R); 
-  world.push(b6.svg);
-
-  // Right column (180-186) - Calculate X to align with block2 (174-179)
-  // block2 starts at block2X, plot 174 is at block2X
-  // Plot 180 should align with around plot 177-178 area
-  // block2X + (3 plots * PW + 3 gaps) gives us around plot 177 position
-  const rightColX = midRightX + b6.w + LANE_GAP;
-  const rc1 = colBlock(rightColX, laneY, rightCol1); 
-  world.push(rc1.svg);
-
   world.push(roadLabelV(midX - LANE_GAP/2, laneY + 160, '7.50 MTR ROAD'));
-  world.push(roadLabel(midRightX + b6.w/2, laneY - 22, '7.50 MTR ROAD'));
 
-  const sectionH = Math.max(lc1.h, p5y - laneY + p5.h, b6.h, rc1.h);
+  const sectionH = Math.max(lc1.h, p5y - laneY + p5.h);
   y = laneY + sectionH + ROAD_GAP;
 }
 
