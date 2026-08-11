@@ -432,18 +432,23 @@ let y = 70;
   // right stack
   let rightX = leftX + b11.w + 330, rightY = y;
   const b17 = grid2row(rightX, rightY, block17Top, block17Bot); world.push(b17.svg);
-  const e77 = rowBlock(rightX + b17.w + 20, rightY + b17.h - PH, extra77); world.push(e77.svg);
+  
+  // Plot 77 with increased height (2 inches = 72 pixels)
+  const plot77Height = PH + 72;
+  const e77 = rowBlock(rightX + b17.w + 20, rightY + b17.h - plot77Height, extra77, PW, plot77Height); 
+  world.push(e77.svg);
+  
   world.push(`<rect x="${rightX+b17.w+18}" y="${rightY-6}" width="34" height="26" rx="4" fill="#8a2f2f" opacity="0.85" transform="rotate(45 ${rightX+b17.w+35} ${rightY+7})"/>`);
   world.push(`<text x="${rightX+b17.w/2}" y="${rightY - 16}" class="amenity-sub">Clubhouse</text>`);
   rightY += b17.h + 60;
 
   const b18 = grid2col(rightX, rightY, block18L, block18R); world.push(b18.svg);
   
-  // Position col19 (39-31) below plot 77 as single vertical column
-  const plot77X = rightX + b17.w + 20; // Same X as plot 77
-  const plot77Y = y + b17.h - PH; // Y position of plot 77
+  // Position col19 (39-31) below plot 77 with proper gap
+  const plot77X = rightX + b17.w + 20;
+  const plot77Y = y + b17.h - plot77Height;
   const col19X = plot77X;
-  const col19Y = plot77Y + PH + GAP; // Directly below plot 77 with small gap
+  const col19Y = plot77Y + plot77Height + 15; // Below plot 77 with gap
   const c19 = colBlock(col19X, col19Y, col19); 
   world.push(c19.svg);
   
