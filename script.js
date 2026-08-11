@@ -629,6 +629,7 @@ document.getElementById('plotSearch').addEventListener('keydown', e=>{ if(e.key=
 let statusViewEnabled = false;
 
 function toggleStatus() {
+  console.log('Toggle clicked, current state:', statusViewEnabled);
   statusViewEnabled = !statusViewEnabled;
   const toggleSwitch = document.getElementById('toggleSwitch');
   const statusStats = document.getElementById('statusStats');
