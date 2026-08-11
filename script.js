@@ -428,9 +428,9 @@ let y = 70;
   const b14 = colBlock(leftX, leftY + b13.h + 60, block14); 
   world.push(b14.svg);
   
-  // Position block15 below plots 57-60 (last 4 plots of block13Bot)
-  const plot57X = leftX + (2 * (PW + GAP)); // Plot 57 is 3rd plot (0-indexed: 2) in block13Bot row
-  const b15X = plot57X;
+  // Position block15 below plots 59-60 (last 2 plots of block13Bot row)
+  const plot59X = leftX + (4 * (PW + GAP)); // Plot 59 is 5th plot (0-indexed: 4) in block13Bot row
+  const b15X = plot59X;
   const b15Y = leftY + b13.h + 60; // Below block13 with gap
   const b15 = grid2col(b15X, b15Y, block15L, block15R); 
   world.push(b15.svg);
