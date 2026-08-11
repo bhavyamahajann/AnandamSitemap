@@ -340,7 +340,7 @@ let y = 70;
   
   // Left column (166-154) - ALIGNED with block1 (167-173)
   const leftColX = MARGIN;
-  const lc1 = colBlock(leftColX, laneY, leftCol1); 
+  const lc1 = colBlock(leftColX, laneY, leftCol1, PW, 46); 
   world.push(lc1.svg);
 
   // Middle area - blocks 143-142 positioned below plots 170-172
@@ -385,7 +385,7 @@ let y = 70;
 
   // Below park - blocks 149-153, 136-132
   const p5y = parkY + parkH + 26;
-  const p5 = grid2col(midX, p5y, block5L, block5R, CORR, PW, 96); 
+  const p5 = grid2col(midX, p5y, block5L, block5R); 
   world.push(p5.svg);
 
   world.push(roadLabelV(midX - LANE_GAP/2, laneY + 160, '7.50 MTR ROAD'));
