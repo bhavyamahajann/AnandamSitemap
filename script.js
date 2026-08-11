@@ -378,11 +378,10 @@ let y = 70;
   // Block8 (131-126, 120-125) positioned BELOW plot 200
   const plot200X = rightGridX; // Plot 200 is at the bottom of block6L (first column of b6)
   const block8X = plot200X;
-  const rightSectionMaxH = Math.max(b6.h, rc1.h);
-  const block8Y = laneY + rightSectionMaxH + 60; // Position below right columns with proper gap
-  const b8 = grid2row(block8X, block8Y, block8Top, block8Bot); 
+  // Calculate block8Y after rightSectionMaxH is computed below
+  const b8 = grid2row(block8X, laneY + b6.h + 60, block8Top, block8Bot); 
   world.push(b8.svg);
-  world.push(roadLabel(block8X + b8.w/2, block8Y - 20, '7.50 MTR ROAD'));
+  world.push(roadLabel(block8X + b8.w/2, laneY + b6.h + 40, '7.50 MTR ROAD'));
 
   // Below park - blocks 149-153, 136-132
   const p5y = parkY + parkH + 26;
@@ -392,6 +391,7 @@ let y = 70;
   world.push(roadLabelV(midX - LANE_GAP/2, laneY + 160, '7.50 MTR ROAD'));
 
   // Position col10 (113-119) below plot 125
+  const block8Y = laneY + b6.h + 60; // Position of block8
   const plot125X = block8X + (5 * (PW + GAP)); // Plot 125 is the 6th plot in block8Bot
   const col10X = plot125X;
   const col10Y = block8Y + (2 * PH + RCORR) + 60; // Below block8 with proper gap
