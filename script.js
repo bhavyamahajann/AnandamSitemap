@@ -455,9 +455,9 @@ let y = 70;
 
   const b18 = grid2col(rightX, rightY, block18L, block18R); world.push(b18.svg);
   
-  // Position col19 (39-31) parallel to plot 76 (same Y level), right of plot 77
+  // Position col19 (39-31) below plot 77 with minimal gap
   const col19X = plot77X + plot77Width + 20; // Right of plot 77 with gap
-  const col19Y = plot76TopY; // Parallel to plot 76 (same Y level)
+  const col19Y = plot76TopY + plot77Height + 10; // Below plot 77 with minimal gap
   const c19 = colBlock(col19X, col19Y, col19); 
   world.push(c19.svg);
   
@@ -484,12 +484,12 @@ let y = 70;
   world.push(`<text x="${x+amW/2}" y="${amY+amH-14}" class="amenity-label">KIDS PARK &amp; OUTDOOR GYM</text>`);
   track(x,amY,amW,amH);
 
-  // Position plots 7-12 directly above tennis court with road gap
+  // Position plots 7-12 directly above tennis court with reduced road gap
   const sportsBaseX = MARGIN + 600 + 70; // Tennis court X position
   const b21X = sportsBaseX; // Align plots with tennis court
   const b21Y = y - 10; 
   const b21 = rowBlock(b21X, b21Y, block21); world.push(b21.svg);
-  const spY = b21Y + PH + 50; // Increased gap for road visibility
+  const spY = b21Y + PH + 30; // Reduced gap for better spacing
   const spH = 170;
   const spW1 = 90, spW2 = b21.w + 90 - spW1 - 14;
   // Sports container positioned at same X as plots
