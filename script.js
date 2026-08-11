@@ -423,11 +423,18 @@ let y = 70;
 
   const b13 = grid2row(leftX, leftY, block13Top, block13Bot); world.push(b13.svg);
   world.push(roadLabel(leftX + b13.w/2, leftY + b13.h + 24, '7.50 MTR ROAD'));
-  leftY += b13.h + 60;
-
-  const b14 = colBlock(leftX, leftY, block14); world.push(b14.svg);
-  const b15 = grid2col(leftX + b14.w + LANE_GAP, leftY, block15L, block15R); world.push(b15.svg);
-  leftY += Math.max(b14.h, b15.h);
+  
+  const b14 = colBlock(leftX, leftY + b13.h + 60, block14); 
+  world.push(b14.svg);
+  
+  // Position block15 below plots 58-60 (last 3 plots of block13Bot)
+  const plot58X = leftX + (3 * (PW + GAP)); // Plot 58 is 4th plot (0-indexed: 3) in block13Bot row
+  const b15X = plot58X;
+  const b15Y = leftY + b13.h + 60; // Below block13 with gap
+  const b15 = grid2col(b15X, b15Y, block15L, block15R); 
+  world.push(b15.svg);
+  
+  leftY += b13.h + 60 + Math.max(b14.h, b15.h);
 
   // right stack
   let rightX = leftX + b11.w + 330, rightY = y;
