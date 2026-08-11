@@ -298,8 +298,7 @@ const block14=[54,53,52,51,50];
 const block15L=[45,46,47,48,49], block15R=[44,43,42,41,40];
 const block17Top=[81,80,79], block17Bot=[73,74,75,76];
 const extra77=[77];
-const block18L=[20,19,18,17,16,15,14,13], block18R=[21,22,23,24,25,26,27];
-const block18bottom=[28,29,30]; // Plots 28, 29, 30 vertically in sequence
+const block18L=[20,19,18,17,16,15,14,13], block18R=[21,22,23,24,25,26,27,28,29,30];
 const col19=[39,38,37,36,35,34,33,32,31];
 const block20=[1,2,3,4,5,6];
 const block21=[7,8,9,10,11,12];
@@ -456,12 +455,6 @@ let y = 70;
   rightY += b17.h + 60;
 
   const b18 = grid2col(rightX, rightY, block18L, block18R); world.push(b18.svg);
-  
-  // Position plots 28-29-30 vertically below block18 right column
-  const plot28X = rightX + PW + CORR; // Same X as right column
-  const plot28Y = rightY + b18.h + 20; // Below entire block18 grid
-  const b18bottom = colBlock(plot28X, plot28Y, block18bottom);
-  world.push(b18bottom.svg);
   
   // Position col19 (39-31) directly below plot 77 with proper gap
   const col19X = plot77X; // Same X as plot 77 (directly below)
