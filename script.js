@@ -484,12 +484,12 @@ let y = 70;
   world.push(`<text x="${x+amW/2}" y="${amY+amH-14}" class="amenity-label">KIDS PARK &amp; OUTDOOR GYM</text>`);
   track(x,amY,amW,amH);
 
-  // Position plots 7-12 directly above tennis court
+  // Position plots 7-12 directly above tennis court with road gap
   const sportsBaseX = MARGIN + 600 + 70; // Tennis court X position
   const b21X = sportsBaseX; // Align plots with tennis court
   const b21Y = y - 10; 
   const b21 = rowBlock(b21X, b21Y, block21); world.push(b21.svg);
-  const spY = b21Y + PH + 15; // Tennis court starts with minimal gap below plots
+  const spY = b21Y + PH + 50; // Increased gap for road visibility
   const spH = 170;
   const spW1 = 90, spW2 = b21.w + 90 - spW1 - 14;
   // Sports container positioned at same X as plots
