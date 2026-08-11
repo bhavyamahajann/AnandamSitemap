@@ -437,16 +437,8 @@ let y = 70;
   
   leftY += b13.h + 60 + Math.max(b14.h, b15.h);
 
-  // Position block17 so plot 76 aligns below plot 78 in col10
-  // Plot 78 is the last plot (8th plot, index 7) in col10
-  const plot78X = col10X; // Plot 78 has same X as col10
-  const plot78Y = col10Y + (7 * (PH + GAP)); // Plot 78 Y position (8th plot, 0-indexed: 7)
-  
-  // Block17 bottom row has 4 plots (73, 74, 75, 76)
-  // Plot 76 is the 4th plot (index 3) in bottom row
-  // So block17 X should be: plot78X - (3 * (PW + GAP))
-  let rightX = plot78X - (3 * (PW + GAP)); // Align plot 76 with plot 78
-  let rightY = plot78Y + PH + 60; // Below plot 78 with gap
+  // right stack
+  let rightX = leftX + b11.w + 330, rightY = y;
   const b17 = grid2row(rightX, rightY, block17Top, block17Bot); world.push(b17.svg);
   
   // Plot 77 with normal width but increased height, aligned directly after block17
