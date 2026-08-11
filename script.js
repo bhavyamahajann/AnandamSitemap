@@ -402,7 +402,7 @@ let y = 70;
   const plot120X = block8X; // Plot 120 is at the start of block8Bot
   const b9X = plot120X;
   const b9Y = col10Y; // Same Y level as col10 (plot 119) - parallel alignment
-  const b9 = grid2col(b9X, b9Y, block9L, block9R, CORR, PW, 48); 
+  const b9 = grid2col(b9X, b9Y, block9L, block9R, CORR, PW, 52); 
   world.push(b9.svg);
 
   const rightSectionMaxH = Math.max(b6.h, rightColYAligned - laneY + rc1.h);
@@ -441,14 +441,10 @@ let y = 70;
   let rightX = leftX + b11.w + 330, rightY = y;
   const b17 = grid2row(rightX, rightY, block17Top, block17Bot); world.push(b17.svg);
   
-  // Park container next to plot 79 (to the right of entire block17Top row)
-  const parkNextTo79X = rightX + (3 * PW) + (2 * GAP) + 15; // After all 3 plots (81,80,79) with gap
-  const parkNextTo79Y = rightY; // Same Y as block17Top
-  const parkNextTo79W = 140;
-  const parkNextTo79H = PH;
-  world.push(hedge(parkNextTo79X, parkNextTo79Y, parkNextTo79W, parkNextTo79H, 10).replace('class="hedge"','class="hedge" style="fill:var(--green)"'));
-  world.push(`<text x="${parkNextTo79X + parkNextTo79W/2}" y="${parkNextTo79Y + parkNextTo79H/2 + 4}" class="amenity-label" style="font-size:11px;">PARK</text>`);
-  track(parkNextTo79X, parkNextTo79Y, parkNextTo79W, parkNextTo79H);
+  // Simple "PARK" text next to plot 79
+  const parkTextX = rightX + (3 * PW) + (2 * GAP) + 30; // After all 3 plots (81,80,79)
+  const parkTextY = rightY + PH/2 + 4; // Centered vertically with plot row
+  world.push(`<text x="${parkTextX}" y="${parkTextY}" class="amenity-label" style="font-size:13px;fill:var(--cream);">PARK</text>`);
   
   // Plot 77 positioned below plot 76 (not parallel)
   const plot77Width = PW; // Normal single plot width (same as plot 76)
@@ -459,7 +455,6 @@ let y = 70;
   const e77 = rowBlock(plot77X, plot77Y, extra77, plot77Width, plot77Height); 
   world.push(e77.svg);
   
-  world.push(`<rect x="${rightX+b17.w+18}" y="${rightY-6}" width="34" height="26" rx="4" fill="#8a2f2f" opacity="0.85" transform="rotate(45 ${rightX+b17.w+35} ${rightY+7})"/>`);
   world.push(`<text x="${rightX+b17.w/2}" y="${rightY - 16}" class="amenity-sub">Clubhouse</text>`);
   rightY += b17.h + 60;
 
