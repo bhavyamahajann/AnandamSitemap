@@ -484,7 +484,7 @@ let y = 70;
   world.push(`<text x="${x+amW/2}" y="${amY+amH-14}" class="amenity-label">KIDS PARK &amp; OUTDOOR GYM</text>`);
   track(x,amY,amW,amH);
 
-  x = MARGIN + 480;
+  x = MARGIN + 600; // Shift right to align with plots 7-12
   const b21 = rowBlock(x, y, block21); world.push(b21.svg);
   const spY = y + PH + 30, spH = 170;
   const spW1 = 90, spW2 = b21.w + 90 - spW1 - 14;
