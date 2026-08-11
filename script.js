@@ -441,12 +441,11 @@ let y = 70;
   let rightX = leftX + b11.w + 330, rightY = y;
   const b17 = grid2row(rightX, rightY, block17Top, block17Bot); world.push(b17.svg);
   
-  // Plot 77 with normal width but increased height, aligned directly after plot 76
-  const plot77Width = PW; // Normal single plot width
+  // Plot 77 with normal width but increased height, aligned directly after block17
+  const plot77Width = PW; // Normal single plot width (same as plot 76)
   const plot77Height = PH + 72; // Increased height
   const plot76TopY = rightY + PH; // Y position where plot 76 starts (top of bottom row)
-  // Block17 bottom row has 4 plots, so plot 76 ends at rightX + (4 * PW) + (3 * GAP)
-  const plot77X = rightX + (4 * PW) + (4 * GAP); // Right after plot 76 with standard gap
+  const plot77X = rightX + b17.w + GAP; // Right after block17 with standard gap
   const e77 = rowBlock(plot77X, plot76TopY, extra77, plot77Width, plot77Height); 
   world.push(e77.svg);
   
