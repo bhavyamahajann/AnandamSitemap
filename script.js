@@ -444,7 +444,7 @@ let y = 70;
   const bottomY = Math.max(leftY, rightY);
   const crossX = leftX + b11.w + (rightX - (leftX + b11.w)) / 2;
   world.push(`<rect x="${crossX-30}" y="${topY-20}" width="60" height="${bottomY-topY+40}" fill="var(--road-dark)"/>`);
-  world.push(roadLabelV(crossX, topY + (bottomY-topY)/2 + 60, '12.00 MTR CROSSOVER ROAD'));
+  world.push(roadLabelV(crossX + 45, topY + (bottomY-topY)/2 + 60, '12.00 MTR CROSSOVER ROAD'));
 
   y = bottomY + ROAD_GAP;
 }
