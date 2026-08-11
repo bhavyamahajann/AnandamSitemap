@@ -454,10 +454,10 @@ let y = 70;
 
   const b18 = grid2col(rightX, rightY, block18L, block18R); world.push(b18.svg);
   
-  // Position col19 (39-31) parallel to plot 76 (same Y level)
+  // Position col19 (39-31) parallel to plot 76 (same Y level), right of plot 77
   const plot77X = rightX + b17.w + 20;
   const plot77Y = plot76TopY;
-  const col19X = plot77X;
+  const col19X = plot77X + plot77Width + 20; // Right of plot 77 with gap
   const col19Y = plot76TopY; // Parallel to plot 76 (same Y level)
   const c19 = colBlock(col19X, col19Y, col19); 
   world.push(c19.svg);
