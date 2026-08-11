@@ -356,9 +356,9 @@ let y = 70;
 
   const rightColX = rightGridX + b6.w + LANE_GAP;
   
-  // Position rightCol1 (180-186) below plot 178
-  const plot178X = block2X + (4 * (PW + GAP)); // Plot 178 is 5th plot (0-indexed: 4)
-  const rightColXAligned = plot178X;
+  // Position rightCol1 (180-186) below plot 179
+  const plot179X = block2X + (5 * (PW + GAP)); // Plot 179 is 6th plot (0-indexed: 5)
+  const rightColXAligned = plot179X;
   const rc1 = colBlock(rightColXAligned, laneY, rightCol1); 
   world.push(rc1.svg);
 
