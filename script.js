@@ -439,16 +439,15 @@ let y = 70;
 
   const b18 = grid2col(rightX, rightY, block18L, block18R); world.push(b18.svg);
   
-  // Position only plot 39 below plot 77 (remove rest of col19)
+  // Position col19 (39-31) below plot 77 as single vertical column
   const plot77X = rightX + b17.w + 20; // Same X as plot 77
   const plot77Y = y + b17.h - PH; // Y position of plot 77
-  const plot39X = plot77X;
-  const plot39Y = plot77Y + PH + GAP; // Directly below plot 77 with small gap
-  const plot39 = plotEl(plot39X, plot39Y, 39, e77.w, PH);
-  world.push(hedge(plot39X, plot39Y, e77.w, PH));
-  world.push(plot39);
+  const col19X = plot77X;
+  const col19Y = plot77Y + PH + GAP; // Directly below plot 77 with small gap
+  const c19 = colBlock(col19X, col19Y, col19); 
+  world.push(c19.svg);
   
-  rightY += Math.max(b18.h, plot39Y - rightY + PH);
+  rightY += Math.max(b18.h, col19Y - rightY + c19.h);
 
   const bottomY = Math.max(leftY, rightY);
   const crossX = leftX + b11.w + (rightX - (leftX + b11.w)) / 2;
