@@ -368,11 +368,12 @@ let y = 70;
   world.push(`<text x="${midX+p4.w/2}" y="${parkY+16}" class="amenity-sub">Landscaped Green &amp; Pond</text>`);
   track(midX, parkY, p4.w, parkH);
 
-  // Block8 (131-126, 120-125) PARALLEL to PARK on the right
+  // Block8 (131-126, 120-125) moved slightly down from PARK top
   const block8X = midX + p4.w + LANE_GAP;
-  const b8 = grid2row(block8X, parkY, block8Top, block8Bot); 
+  const block8Y = parkY - 15; // Moved down 15px closer to PARK level
+  const b8 = grid2row(block8X, block8Y, block8Top, block8Bot); 
   world.push(b8.svg);
-  world.push(roadLabel(block8X + b8.w/2, parkY - 20, '7.50 MTR ROAD'));
+  world.push(roadLabel(block8X + b8.w/2, block8Y - 20, '7.50 MTR ROAD'));
 
   // Below park - blocks 149-153, 136-132
   const p5y = parkY + parkH + 26;
@@ -381,7 +382,7 @@ let y = 70;
 
   world.push(roadLabelV(midX - LANE_GAP/2, laneY + 160, '7.50 MTR ROAD'));
 
-  const sectionH = Math.max(lc1.h, b6.h, rc1.h, p5y - laneY + p5.h, parkY - laneY + Math.max(parkH, b8.h));
+  const sectionH = Math.max(lc1.h, b6.h, rc1.h, p5y - laneY + p5.h, block8Y - laneY + b8.h);
   y = laneY + sectionH + ROAD_GAP;
 }
 
