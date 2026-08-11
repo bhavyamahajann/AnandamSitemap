@@ -354,12 +354,12 @@ let y = 70;
   const b6 = grid2col(rightGridX, laneY, block6L, block6R); 
   world.push(b6.svg);
 
-  const rightColX = rightGridX + b6.w + LANE_GAP;
-  
-  // Position rightCol1 (180-186) below plot 179
+  // Position rightCol1 (180-186) below plot 179 (not at laneY)
+  const plot179Y = y - PH - 45; // Y position of plot 179 row (same as block2)
   const plot179X = block2X + (5 * (PW + GAP)); // Plot 179 is 6th plot (0-indexed: 5)
   const rightColXAligned = plot179X;
-  const rc1 = colBlock(rightColXAligned, laneY, rightCol1); 
+  const rightColYAligned = plot179Y + PH + 45; // Below plot 179 with proper gap
+  const rc1 = colBlock(rightColXAligned, rightColYAligned, rightCol1); 
   world.push(rc1.svg);
 
   world.push(roadLabel(rightGridX + b6.w/2, laneY - 22, '7.50 MTR ROAD'));
@@ -405,7 +405,8 @@ let y = 70;
   const b9 = grid2col(b9X, b9Y, block9L, block9R); 
   world.push(b9.svg);
 
-  const sectionH = Math.max(lc1.h, b6.h, rc1.h, p5y - laneY + p5.h, block8Y - laneY + b8.h, col10Y - laneY + c10.h, b9Y - laneY + b9.h);
+  const rightSectionMaxH = Math.max(b6.h, rightColYAligned - laneY + rc1.h);
+  const sectionH = Math.max(lc1.h, rightSectionMaxH, p5y - laneY + p5.h, block8Y - laneY + b8.h, col10Y - laneY + c10.h, b9Y - laneY + b9.h);
   y = laneY + sectionH + ROAD_GAP;
 }
 
@@ -465,7 +466,7 @@ let y = 70;
 
   const bottomY = Math.max(leftY, rightY);
   const crossX = leftX + b11.w + (rightX - (leftX + b11.w)) / 2;
-  world.push(`<rect x="${crossX-30}" y="${topY-20}" width="60" height="${bottomY-topY+40}" fill="var(--road-dark)"/>`);
+  // Crossover road rectangle removed - keeping only the text label
   world.push(roadLabelV(crossX + 45, topY + (bottomY-topY)/2 + 60, '12.00 MTR CROSSOVER ROAD'));
 
   y = bottomY + ROAD_GAP;
