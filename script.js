@@ -459,11 +459,11 @@ let y = 70;
 
   const b18 = grid2col(rightX, rightY, block18L, block18R); world.push(b18.svg);
   
-  // Position col19 (39-31) directly below plot 77 with minimal gap
+  // Position col19 (39-31) parallel to plot 76 (same Y level)
   const plot77X = rightX + b17.w + 20;
   const plot77Y = plot76TopY;
   const col19X = plot77X;
-  const col19Y = plot77Y + plot77Height + 5; // Below plot 77 with minimal gap
+  const col19Y = plot76TopY; // Parallel to plot 76 (same Y level)
   const c19 = colBlock(col19X, col19Y, col19); 
   world.push(c19.svg);
   
