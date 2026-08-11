@@ -310,24 +310,38 @@ const block21=[7,8,9,10,11,12];
 /* ---------- Compose layout ---------- */
 let y = 70;
 
-// SECTION 1 : top cul-de-sac
+// SECTION 1 : top cul-de-sac and plots 174-200
 {
   let x = MARGIN;
   const b1 = rowBlock(x, y, block1); world.push(b1.svg);
   x += b1.w + 70;
   world.push(node(x+22, y+18, 'B'));
   x += 90;
-  const b2 = rowBlock(x, y, block2); world.push(b2.svg);
   
-  // Add rightCol1 (180-186) below block2 (178-179)
-  const rc1 = colBlock(x, y + PH + GAP, rightCol1); world.push(rc1.svg);
+  // Top row: plots 174-179
+  const topRowY = y;
+  const b2 = rowBlock(x, topRowY, block2); world.push(b2.svg);
   
-  world.push(roadLabel(MARGIN+b1.w/2, y+PH+40, '7.50 MTR ROAD'));
-  world.push(roadLabel(x+b2.w/2, y+PH+40, '7.50 MTR ROAD'));
-  y += PH + ROAD_GAP;
+  world.push(roadLabel(MARGIN+b1.w/2, topRowY+PH+40, '7.50 MTR ROAD'));
+  world.push(roadLabel(x+b2.w/2, topRowY+PH+40, '7.50 MTR ROAD'));
+  
+  // Below 174-179: Create the container area
+  const containerY = topRowY + PH + ROAD_GAP;
+  let containerX = x;
+  
+  // Left side: block6 (194-200 left column, 193-187 right column) as grid2col
+  const b6 = grid2col(containerX, containerY, block6L, block6R); 
+  world.push(b6.svg);
+  
+  // Right side: rightCol1 (180-186) as vertical column
+  containerX += b6.w + LANE_GAP;
+  const rc1 = colBlock(containerX, containerY, rightCol1); 
+  world.push(rc1.svg);
+  
+  y += PH + ROAD_GAP + Math.max(b6.h, rc1.h) + ROAD_GAP;
 }
 
-// SECTION 2 : four lanes (left column, park cluster, block6, right column)
+// SECTION 2 : four lanes (left column, park cluster)
 {
   const laneY = y;
   let x = MARGIN;
@@ -348,13 +362,9 @@ let y = 70;
   const p5y = parkY + parkH + 26;
   const p5 = grid2col(x, p5y, block5L, block5R); world.push(p5.svg);
 
-  x += p4.w + LANE_GAP;
-  const b6 = grid2col(x, laneY, block6L, block6R); world.push(b6.svg);
-
   world.push(roadLabelV(MARGIN + lc1.w + LANE_GAP/2, laneY + 160, '7.50 MTR ROAD'));
-  world.push(roadLabel(x + b6.w/2, laneY - 22, '7.50 MTR ROAD'));
 
-  const sectionH = Math.max(lc1.h, p5y - laneY + p5.h, b6.h);
+  const sectionH = Math.max(lc1.h, p5y - laneY + p5.h);
   y = laneY + sectionH + ROAD_GAP;
 }
 
