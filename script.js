@@ -368,8 +368,9 @@ let y = 70;
   world.push(`<text x="${midX+p4.w/2}" y="${parkY+16}" class="amenity-sub">Landscaped Green &amp; Pond</text>`);
   track(midX, parkY, p4.w, parkH);
 
-  // Block8 (131-126, 120-125) positioned BELOW the right columns with proper gap
-  const block8X = midX + p4.w + LANE_GAP;
+  // Block8 (131-126, 120-125) positioned BELOW the right columns and aligned with plot 179
+  const plot179X = block2X + (5 * (PW + GAP)); // Plot 179 is the 6th plot in block2 (0-indexed: 5)
+  const block8X = plot179X;
   const rightSectionMaxH = Math.max(b6.h, rc1.h);
   const block8Y = laneY + rightSectionMaxH + 60; // Position below right columns with proper gap
   const b8 = grid2row(block8X, block8Y, block8Top, block8Bot); 
