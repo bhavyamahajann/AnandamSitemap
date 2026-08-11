@@ -298,7 +298,8 @@ const block14=[54,53,52,51,50];
 const block15L=[45,46,47,48,49], block15R=[44,43,42,41,40];
 const block17Top=[81,80,79], block17Bot=[73,74,75,76];
 const extra77=[77];
-const block18L=[20,19,18,17,16,15,14,13,29], block18R=[21,22,23,24,25,26,27,28,30];
+const block18L=[20,19,18,17,16,15,14,13], block18R=[21,22,23,24,25,26,27,28];
+const block18corner=[30,29]; // Plot 30 below plot 29 as corner plots
 const col19=[39,38,37,36,35,34,33,32,31];
 const block20=[1,2,3,4,5,6];
 const block21=[7,8,9,10,11,12];
@@ -455,6 +456,12 @@ let y = 70;
   rightY += b17.h + 60;
 
   const b18 = grid2col(rightX, rightY, block18L, block18R); world.push(b18.svg);
+  
+  // Position plots 29-30 as corner column right of block18
+  const corner1830X = rightX + b18.w + GAP;
+  const corner1830Y = rightY + (6 * (PH + GAP)); // Align with plots 27-28 position
+  const corner1830 = colBlock(corner1830X, corner1830Y, block18corner);
+  world.push(corner1830.svg);
   
   // Position col19 (39-31) directly below plot 77 with proper gap
   const col19X = plot77X; // Same X as plot 77 (directly below)
