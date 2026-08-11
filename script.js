@@ -441,11 +441,10 @@ let y = 70;
   let rightX = leftX + b11.w + 330, rightY = y;
   const b17 = grid2row(rightX, rightY, block17Top, block17Bot); world.push(b17.svg);
   
-  // Park container next to plot 79 (to the right of block17Top)
-  const plot79X = rightX + (2 * (PW + GAP)); // Plot 79 is 3rd plot in block17Top (0-indexed: 2)
-  const parkNextTo79X = plot79X + PW + 15; // Position to the right of plot 79
+  // Park container next to plot 79 (to the right of entire block17Top row)
+  const parkNextTo79X = rightX + (3 * PW) + (2 * GAP) + 15; // After all 3 plots (81,80,79) with gap
   const parkNextTo79Y = rightY; // Same Y as block17Top
-  const parkNextTo79W = 80;
+  const parkNextTo79W = 140;
   const parkNextTo79H = PH;
   world.push(hedge(parkNextTo79X, parkNextTo79Y, parkNextTo79W, parkNextTo79H, 10).replace('class="hedge"','class="hedge" style="fill:var(--green)"'));
   world.push(`<text x="${parkNextTo79X + parkNextTo79W/2}" y="${parkNextTo79Y + parkNextTo79H/2 + 4}" class="amenity-label" style="font-size:11px;">PARK</text>`);
