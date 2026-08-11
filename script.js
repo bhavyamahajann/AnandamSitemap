@@ -433,9 +433,10 @@ let y = 70;
   let rightX = leftX + b11.w + 330, rightY = y;
   const b17 = grid2row(rightX, rightY, block17Top, block17Bot); world.push(b17.svg);
   
-  // Plot 77 with increased height (2 inches = 72 pixels)
+  // Plot 77 with width matching block17Bot (4 plots wide) and increased height
+  const plot77Width = 4 * PW + 3 * GAP; // Width of 4 plots in block17Bot
   const plot77Height = PH + 72;
-  const e77 = rowBlock(rightX + b17.w + 20, rightY + b17.h - plot77Height, extra77, PW, plot77Height); 
+  const e77 = rowBlock(rightX + b17.w + 20, rightY + b17.h - plot77Height, extra77, plot77Width, plot77Height); 
   world.push(e77.svg);
   
   world.push(`<rect x="${rightX+b17.w+18}" y="${rightY-6}" width="34" height="26" rx="4" fill="#8a2f2f" opacity="0.85" transform="rotate(45 ${rightX+b17.w+35} ${rightY+7})"/>`);
