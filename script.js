@@ -484,14 +484,16 @@ let y = 70;
   world.push(`<text x="${x+amW/2}" y="${amY+amH-14}" class="amenity-label">KIDS PARK &amp; OUTDOOR GYM</text>`);
   track(x,amY,amW,amH);
 
-  x = MARGIN + 600; // Shift right to align with plots 7-12
-  const b21Y = y - 10; // Position plots slightly higher
-  const b21 = rowBlock(x, b21Y, block21); world.push(b21.svg);
+  // Position plots 7-12 directly above tennis court
+  const sportsBaseX = MARGIN + 600 + 70; // Tennis court X position
+  const b21X = sportsBaseX; // Align plots with tennis court
+  const b21Y = y - 10; 
+  const b21 = rowBlock(b21X, b21Y, block21); world.push(b21.svg);
   const spY = b21Y + PH + 15; // Tennis court starts with minimal gap below plots
   const spH = 170;
   const spW1 = 90, spW2 = b21.w + 90 - spW1 - 14;
-  // Shift the entire sports container right to align below plots 30, 29, 31
-  const sportsX = x + 70; // Additional right shift
+  // Sports container positioned at same X as plots
+  const sportsX = sportsBaseX;
   world.push(`<rect x="${sportsX}" y="${spY}" width="${spW1}" height="${spH}" rx="10" style="fill:var(--green)"/>`);
   world.push(`<rect x="${sportsX+14}" y="${spY+14}" width="${spW1-28}" height="${spH-28}" rx="6" fill="#1f6f4a"/>`);
   world.push(`<text x="${sportsX+spW1/2}" y="${spY+spH/2}" class="amenity-sub" transform="rotate(-90 ${sportsX+spW1/2} ${spY+spH/2})">GYM</text>`);
@@ -502,7 +504,6 @@ let y = 70;
   world.push(`<circle cx="${tx+spW2/2}" cy="${spY+spH/2}" r="18" fill="none" stroke="#e7e2d6" stroke-width="1.5" opacity="0.6"/>`);
   world.push(`<text x="${tx+spW2/2}" y="${spY+spH-14}" class="amenity-label">TENNIS COURT</text>`);
   track(sportsX,spY,spW1+spW2+14,spH);
-  track(x,spY,spW1+spW2+14,spH);
 
   // entry node between the two amenity clusters
   const entryX = MARGIN + 300, entryY = spY + spH/2;
