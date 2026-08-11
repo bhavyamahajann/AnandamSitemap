@@ -1,4 +1,5 @@
 ﻿/* ============================= LAYOUT ENGINE ============================= */
+// Layout constants
 const PW=64, PH=36, GAP=3, CORR=46, RCORR=52, MARGIN=60, LANE_GAP=64, ROAD_GAP=76;
 let world = [];
 let plotPositions = {}; // number -> {x,y,w,h}
