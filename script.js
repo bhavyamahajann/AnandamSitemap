@@ -454,7 +454,23 @@ let y = 70;
   world.push(`<text x="${rightX+b17.w/2}" y="${rightY - 16}" class="amenity-sub">Clubhouse</text>`);
   rightY += b17.h + 60;
 
-  const b18 = grid2col(rightX, rightY, block18L, block18R); world.push(b18.svg);
+  // Block18 with aligned bottoms - shift left column down to align plot 13 with plot 30
+  const heightDiff = (block18R.length - block18L.length) * (PH + GAP); // Height difference between columns
+  const leftColStartY = rightY + heightDiff; // Start left column lower
+  
+  let b18svg = '';
+  // Left column (20-13) starting lower to align bottom
+  block18L.forEach((n,i)=>b18svg+=plotEl(rightX, leftColStartY+i*(PH+GAP), n, PW, PH));
+  
+  // Right column (21-30) starting at normal position
+  block18R.forEach((n,i)=>b18svg+=plotEl(rightX+PW+CORR, rightY+i*(PH+GAP), n, PW, PH));
+  
+  const b18TotalH = block18R.length*(PH+GAP)-GAP; // Use right column height (longer)
+  const b18TotalW = 2*PW+CORR;
+  b18svg = hedge(rightX, rightY, b18TotalW, b18TotalH) + b18svg;
+  world.push(b18svg);
+  
+  const b18h = b18TotalH; // For future reference
   
   // Position col19 (39-31) directly below plot 77 with proper gap
   const col19X = plot77X; // Same X as plot 77 (directly below)
