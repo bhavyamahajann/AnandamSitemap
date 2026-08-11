@@ -433,9 +433,9 @@ let y = 70;
   let rightX = leftX + b11.w + 330, rightY = y;
   const b17 = grid2row(rightX, rightY, block17Top, block17Bot); world.push(b17.svg);
   
-  // Plot 77 with width matching block17Bot (4 plots wide) and increased height
-  const plot77Width = 4 * PW + 3 * GAP; // Width of 4 plots in block17Bot
-  const plot77Height = PH + 72;
+  // Plot 77 with normal width but increased height, positioned next to plot 76
+  const plot77Width = PW; // Normal single plot width
+  const plot77Height = PH + 72; // Increased height
   const e77 = rowBlock(rightX + b17.w + 20, rightY + b17.h - plot77Height, extra77, plot77Width, plot77Height); 
   world.push(e77.svg);
   
