@@ -398,10 +398,10 @@ let y = 70;
   const c10 = colBlock(col10X, col10Y, col10); 
   world.push(c10.svg);
 
-  // Position block9 (105-112, 100-106) below plots 120-123
+  // Position block9 (105-112, 100-106) parallel to col10 (at same Y level as plot 119)
   const plot120X = block8X; // Plot 120 is at the start of block8Bot
   const b9X = plot120X;
-  const b9Y = block8Y + PH + RCORR + 60; // Below block8Bot with proper gap
+  const b9Y = col10Y; // Same Y level as col10 (plot 119) - parallel alignment
   const b9 = grid2col(b9X, b9Y, block9L, block9R); 
   world.push(b9.svg);
 
