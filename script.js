@@ -353,7 +353,11 @@ let y = 70;
   world.push(b6.svg);
 
   const rightColX = rightGridX + b6.w + LANE_GAP;
-  const rc1 = colBlock(rightColX, laneY, rightCol1); 
+  
+  // Position rightCol1 (180-186) below plot 178
+  const plot178X = block2X + (4 * (PW + GAP)); // Plot 178 is 5th plot (0-indexed: 4)
+  const rightColXAligned = plot178X;
+  const rc1 = colBlock(rightColXAligned, laneY, rightCol1); 
   world.push(rc1.svg);
 
   world.push(roadLabel(rightGridX + b6.w/2, laneY - 22, '7.50 MTR ROAD'));
