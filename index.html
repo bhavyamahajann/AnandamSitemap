@@ -37,21 +37,42 @@
     background:linear-gradient(180deg,rgba(16,19,23,0.95),rgba(16,19,23,0));
     pointer-events:none;
   }
+  @media (max-width: 768px) {
+    header{padding:12px 16px;flex-wrap:wrap;gap:8px;}
+  }
   header .brand{pointer-events:auto;}
   header h1{
     font-family:'Playfair Display',serif;
     color:var(--cream);font-size:22px;font-weight:700;margin:0;letter-spacing:.5px;
   }
+  @media (max-width: 768px) {
+    header h1{font-size:18px;}
+  }
   header .sub{color:var(--gold);font-size:11px;letter-spacing:3px;text-transform:uppercase;margin-top:3px;}
+  @media (max-width: 768px) {
+    header .sub{font-size:9px;letter-spacing:2px;}
+  }
 
   #searchWrap{pointer-events:auto;display:flex;align-items:center;gap:8px;background:var(--panel);
     border:1px solid var(--gold-soft);border-radius:30px;padding:8px 16px;backdrop-filter:blur(8px);}
+  @media (max-width: 768px) {
+    #searchWrap{padding:6px 12px;width:100%;margin-top:8px;order:3;}
+  }
   #searchWrap input{background:transparent;border:none;outline:none;color:var(--cream);font-size:13px;width:120px;font-family:'Inter',sans-serif;}
+  @media (max-width: 768px) {
+    #searchWrap input{font-size:14px;flex:1;width:auto;}
+  }
   #searchWrap input::placeholder{color:var(--text-mute);}
   #searchWrap button{background:var(--gold);border:none;color:#20242a;font-weight:600;font-size:12px;
     padding:6px 14px;border-radius:20px;cursor:pointer;}
+  @media (max-width: 768px) {
+    #searchWrap button{padding:8px 16px;font-size:13px;}
+  }
   #searchMsg{position:absolute;top:78px;right:26px;z-index:20;color:#e88;font-size:12px;background:var(--panel);
     padding:6px 12px;border-radius:8px;display:none;border:1px solid #a44;}
+  @media (max-width: 768px) {
+    #searchMsg{top:auto;bottom:80px;right:16px;left:16px;text-align:center;}
+  }
 
   #viewport{position:absolute;inset:0;cursor:grab;touch-action:none;}
   #viewport.grabbing{cursor:grabbing;}
@@ -73,30 +94,68 @@
   .node-label{fill:var(--cream);font-size:15px;font-weight:700;font-family:'Playfair Display',serif;text-anchor:middle;}
 
   #controls{position:absolute;bottom:24px;right:24px;z-index:20;display:flex;flex-direction:column;gap:10px;}
+  @media (max-width: 768px) {
+    #controls{bottom:16px;right:16px;gap:8px;}
+  }
   .ctrl-btn{width:42px;height:42px;border-radius:12px;border:1px solid var(--gold-soft);
     background:var(--panel);color:var(--cream);font-size:18px;display:flex;align-items:center;justify-content:center;
     cursor:pointer;backdrop-filter:blur(8px);user-select:none;}
+  @media (max-width: 768px) {
+    .ctrl-btn{width:48px;height:48px;font-size:20px;border-radius:14px;}
+  }
   .ctrl-btn:active{background:var(--gold);color:#20242a;}
 
   #legend{position:absolute;bottom:24px;left:24px;z-index:20;background:var(--panel);border:1px solid var(--gold-soft);
     border-radius:14px;padding:16px 18px;backdrop-filter:blur(8px);max-width:220px;}
+  @media (max-width: 768px) {
+    #legend{bottom:16px;left:16px;padding:12px 14px;max-width:180px;font-size:11px;}
+  }
   #legend h3{margin:0 0 10px;color:var(--gold);font-size:11px;letter-spacing:2px;text-transform:uppercase;font-family:'Inter',sans-serif;}
+  @media (max-width: 768px) {
+    #legend h3{font-size:10px;margin:0 0 8px;letter-spacing:1px;}
+  }
   .leg-row{display:flex;align-items:center;gap:9px;margin-bottom:7px;font-size:12px;color:var(--text-soft);}
+  @media (max-width: 768px) {
+    .leg-row{gap:6px;margin-bottom:5px;font-size:10px;}
+  }
   .swatch{width:14px;height:14px;border-radius:4px;flex-shrink:0;}
+  @media (max-width: 768px) {
+    .swatch{width:12px;height:12px;border-radius:3px;}
+  }
   #legend .stat{margin-top:10px;padding-top:10px;border-top:1px solid #ffffff1a;color:var(--text-mute);font-size:11px;}
+  @media (max-width: 768px) {
+    #legend .stat{margin-top:8px;padding-top:8px;font-size:9px;}
+  }
   #legend .stat b{color:var(--cream);font-size:16px;font-family:'Playfair Display',serif;}
+  @media (max-width: 768px) {
+    #legend .stat b{font-size:13px;}
+  }
   
   #statusToggle{position:absolute;top:78px;right:26px;z-index:20;background:var(--panel);border:1px solid var(--gold-soft);
     border-radius:30px;padding:10px 18px;backdrop-filter:blur(8px);display:flex;align-items:center;gap:12px;
     font-size:12px;color:var(--text-soft);cursor:pointer;user-select:none;}
+  @media (max-width: 768px) {
+    #statusToggle{top:auto;bottom:80px;right:16px;left:auto;padding:8px 14px;gap:8px;
+      border-radius:24px;font-size:11px;flex-wrap:wrap;max-width:calc(100vw - 32px);}
+  }
   #statusToggle:hover{border-color:var(--gold);}
   #statusToggle .label{font-weight:600;letter-spacing:.5px;}
   .toggle-switch{position:relative;width:44px;height:24px;background:#3a3f46;border-radius:12px;transition:background .3s;}
+  @media (max-width: 768px) {
+    .toggle-switch{width:40px;height:22px;}
+  }
   .toggle-switch.active{background:var(--gold);}
   .toggle-slider{position:absolute;top:3px;left:3px;width:18px;height:18px;background:#fff;border-radius:50%;
     transition:transform .3s;}
+  @media (max-width: 768px) {
+    .toggle-slider{width:16px;height:16px;}
+    .toggle-switch.active .toggle-slider{transform:translateX(18px);}
+  }
   .toggle-switch.active .toggle-slider{transform:translateX(20px);}
   #statusStats{margin-left:8px;font-size:11px;color:var(--text-mute);display:none;}
+  @media (max-width: 768px) {
+    #statusStats{margin-left:0;font-size:10px;width:100%;text-align:center;margin-top:4px;}
+  }
   #statusStats.show{display:inline;}
   #statusStats .reserved-count{color:#ffff00;font-weight:700;}
   #statusStats .sold-company-count{color:#90ee90;font-weight:700;}
@@ -104,24 +163,42 @@
   #statusStats .available-count{color:var(--cream);font-weight:700;}
 
   #hint{position:absolute;top:78px;left:26px;z-index:15;color:var(--text-mute);font-size:11px;letter-spacing:.5px;pointer-events:none;}
+  @media (max-width: 768px) {
+    #hint{display:none;}
+  }
 
   #tooltip{position:absolute;z-index:30;background:var(--panel-solid);border:1px solid var(--gold);
     border-radius:10px;padding:14px 18px;backdrop-filter:blur(10px);pointer-events:none;
     display:none;box-shadow:0 8px 24px rgba(0,0,0,0.5);min-width:200px;}
+  @media (max-width: 768px) {
+    #tooltip{padding:12px 16px;min-width:280px;max-width:calc(100vw - 32px);font-size:13px;}
+  }
   #tooltip.show{display:block;}
   #tooltip .plot-title{color:var(--gold);font-size:15px;font-weight:700;margin-bottom:8px;
     font-family:'Playfair Display',serif;}
+  @media (max-width: 768px) {
+    #tooltip .plot-title{font-size:16px;margin-bottom:10px;}
+  }
   #tooltip .plot-detail{color:var(--text-soft);font-size:12px;margin:4px 0;display:flex;
     justify-content:space-between;gap:16px;}
+  @media (max-width: 768px) {
+    #tooltip .plot-detail{font-size:13px;margin:6px 0;gap:12px;}
+  }
   #tooltip .plot-detail .label{color:var(--text-mute);}
   #tooltip .plot-detail .value{font-weight:600;color:var(--cream);}
   #tooltip .plot-tags{margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;}
+  @media (max-width: 768px) {
+    #tooltip .plot-tags{margin-top:10px;gap:8px;}
+  }
   #tooltip .tag{background:var(--gold-soft);color:var(--gold);font-size:10px;padding:3px 8px;
     border-radius:4px;font-weight:600;letter-spacing:.5px;}
+  @media (max-width: 768px) {
+    #tooltip .tag{font-size:11px;padding:4px 10px;}
+  }
   #tooltip .tag.status-reserved{background:#ffff0030;color:#d4d400;border:1px solid #d4d400;}
   #tooltip .tag.status-sold-company{background:#90ee9030;color:#5cb85c;border:1px solid #5cb85c;}
   #tooltip .tag.status-sold-partner{background:#00bfff30;color:#0099cc;border:1px solid #0099cc;}
-  #tooltip .tag.status-available{background:#f4efe230;color:var(--cream-line);border:1px solid var(--cream-line);}
+  #tooltip .tag.status-available{background:#f4efe230;color:var(--cream-line);border:1px solid var(--cream-line;}
 </style>
 </head>
 <body>
@@ -804,59 +881,92 @@ document.querySelectorAll('.plot-g').forEach(plotGroup => {
   
   if (!data) return;
   
+  // Mouse events for desktop
   plotGroup.addEventListener('mouseenter', (e) => {
-    ttTitle.textContent = `Plot #${plotNum}`;
-    ttWidth.textContent = `${data.width.toFixed(2)} ft`;
-    ttDepth.textContent = `${data.depth.toFixed(2)} ft`;
-    ttMarla.textContent = data.marla.toFixed(2);
-    ttSqyd.textContent = data.sqyd.toFixed(2);
-    
-    // Parse and display tags
-    const tags = data.tags.split('+').map(t => t.trim()).filter(t => t && t !== 'N.A.');
-    let tagsHTML = tags.length > 0 
-      ? tags.map(tag => `<span class="tag">${tag}</span>`).join('') 
-      : '<span class="tag">RESIDENTIAL</span>';
-    
-    // Add status tag
-    let statusText = '';
-    let statusClass = '';
-    if (data.status === 'reserved') {
-      statusText = 'RESERVED BY COMPANY';
-      statusClass = 'status-reserved';
-    } else if (data.status === 'sold-company') {
-      statusText = 'SOLD BY COMPANY';
-      statusClass = 'status-sold-company';
-    } else if (data.status === 'sold-partner') {
-      statusText = 'SOLD BY CHANNEL PARTNER';
-      statusClass = 'status-sold-partner';
-    } else if (data.status === 'available') {
-      statusText = 'AVAILABLE';
-      statusClass = 'status-available';
-    }
-    tagsHTML += `<span class="tag ${statusClass}">${statusText}</span>`;
-    
-    ttTags.innerHTML = tagsHTML;
-    
-    tooltip.classList.add('show');
+    showTooltip(plotNum, data);
   });
   
   plotGroup.addEventListener('mousemove', (e) => {
-    const x = e.clientX + 15;
-    const y = e.clientY + 15;
-    const rect = tooltip.getBoundingClientRect();
-    
-    // Adjust if tooltip goes off-screen
-    const adjustedX = (x + rect.width > window.innerWidth) ? e.clientX - rect.width - 15 : x;
-    const adjustedY = (y + rect.height > window.innerHeight) ? e.clientY - rect.height - 15 : y;
-    
-    tooltip.style.left = adjustedX + 'px';
-    tooltip.style.top = adjustedY + 'px';
+    positionTooltip(e.clientX, e.clientY);
   });
   
   plotGroup.addEventListener('mouseleave', () => {
     tooltip.classList.remove('show');
   });
+  
+  // Touch events for mobile
+  plotGroup.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    showTooltip(plotNum, data);
+    const touch = e.touches[0];
+    positionTooltip(touch.clientX, touch.clientY);
+  });
 });
+
+// Hide tooltip on outside touch/click
+document.addEventListener('touchstart', (e) => {
+  if (!e.target.closest('.plot-g')) {
+    tooltip.classList.remove('show');
+  }
+});
+
+function showTooltip(plotNum, data) {
+  ttTitle.textContent = `Plot #${plotNum}`;
+  ttWidth.textContent = `${data.width.toFixed(2)} ft`;
+  ttDepth.textContent = `${data.depth.toFixed(2)} ft`;
+  ttMarla.textContent = data.marla.toFixed(2);
+  ttSqyd.textContent = data.sqyd.toFixed(2);
+  
+  // Parse and display tags
+  const tags = data.tags.split('+').map(t => t.trim()).filter(t => t && t !== 'N.A.');
+  let tagsHTML = tags.length > 0 
+    ? tags.map(tag => `<span class="tag">${tag}</span>`).join('') 
+    : '<span class="tag">RESIDENTIAL</span>';
+  
+  // Add status tag
+  let statusText = '';
+  let statusClass = '';
+  if (data.status === 'reserved') {
+    statusText = 'RESERVED BY COMPANY';
+    statusClass = 'status-reserved';
+  } else if (data.status === 'sold-company') {
+    statusText = 'SOLD BY COMPANY';
+    statusClass = 'status-sold-company';
+  } else if (data.status === 'sold-partner') {
+    statusText = 'SOLD BY CHANNEL PARTNER';
+    statusClass = 'status-sold-partner';
+  } else if (data.status === 'available') {
+    statusText = 'AVAILABLE';
+    statusClass = 'status-available';
+  }
+  tagsHTML += `<span class="tag ${statusClass}">${statusText}</span>`;
+  
+  ttTags.innerHTML = tagsHTML;
+  tooltip.classList.add('show');
+}
+
+function positionTooltip(x, y) {
+  const isMobile = window.innerWidth <= 768;
+  
+  if (isMobile) {
+    // Center tooltip on mobile
+    tooltip.style.left = '50%';
+    tooltip.style.top = '50%';
+    tooltip.style.transform = 'translate(-50%, -50%)';
+  } else {
+    // Follow cursor on desktop
+    tooltip.style.transform = 'none';
+    const adjustedX = x + 15;
+    const adjustedY = y + 15;
+    const rect = tooltip.getBoundingClientRect();
+    
+    const finalX = (adjustedX + rect.width > window.innerWidth) ? x - rect.width - 15 : adjustedX;
+    const finalY = (adjustedY + rect.height > window.innerHeight) ? y - rect.height - 15 : adjustedY;
+    
+    tooltip.style.left = finalX + 'px';
+    tooltip.style.top = finalY + 'px';
+  }
+}
 </script>
 </body>
 </html>
