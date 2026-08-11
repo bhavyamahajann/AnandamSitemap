@@ -320,8 +320,9 @@ let y = 70;
   const b2 = rowBlock(block2X, row1Y, block2); 
   world.push(b2.svg);
   
-  world.push(roadLabel(block1X+b1.w/2, row1Y+PH+40, '7.50 MTR ROAD'));
-  world.push(roadLabel(block2X+b2.w/2, row1Y+PH+40, '7.50 MTR ROAD'));
+  // Single road label centered between both blocks
+  const combinedWidth = b1.w + (nodeX - block1X - b1.w) + 44 + b2.w;
+  world.push(roadLabel(block1X + combinedWidth/2, row1Y+PH+40, '7.50 MTR ROAD'));
   
   y += PH + 45; // Reduced gap from ROAD_GAP (76) to 45
 }
