@@ -101,7 +101,7 @@ svg{display:block;}
 #legend{position:absolute;bottom:24px;left:24px;z-index:20;background:var(--panel);border:1px solid var(--gold-soft);
   border-radius:14px;padding:16px 18px;backdrop-filter:blur(8px);max-width:220px;}
 @media (max-width: 768px) {
-  #legend{bottom:80px;left:16px;padding:8px 10px;max-width:140px;font-size:9px;}
+  #legend{display:none;}
 }
 #legend h3{margin:0 0 10px;color:var(--gold);font-size:11px;letter-spacing:2px;text-transform:uppercase;font-family:'Inter',sans-serif;}
 @media (max-width: 768px) {
@@ -130,7 +130,7 @@ svg{display:block;}
 @media (max-width: 768px) {
   #statusToggle{top:118px;right:16px;left:16px;padding:6px 10px;gap:6px;
     border-radius:20px;font-size:9px;flex-wrap:nowrap;max-width:none;white-space:nowrap;
-    justify-content:center;}
+    justify-content:center;background:transparent;border:none;backdrop-filter:none;}
 }
 #statusToggle:hover{border-color:var(--gold);}
 #statusToggle .label{font-weight:600;letter-spacing:.5px;}
