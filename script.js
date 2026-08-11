@@ -485,8 +485,10 @@ let y = 70;
   track(x,amY,amW,amH);
 
   x = MARGIN + 600; // Shift right to align with plots 7-12
-  const b21 = rowBlock(x, y, block21); world.push(b21.svg);
-  const spY = y + PH + 30, spH = 170;
+  const b21Y = y - 10; // Position plots slightly higher
+  const b21 = rowBlock(x, b21Y, block21); world.push(b21.svg);
+  const spY = b21Y + PH + 15; // Tennis court starts with minimal gap below plots
+  const spH = 170;
   const spW1 = 90, spW2 = b21.w + 90 - spW1 - 14;
   // Shift the entire sports container right to align below plots 30, 29, 31
   const sportsX = x + 70; // Additional right shift
