@@ -389,18 +389,23 @@ let y = 70;
 
   world.push(roadLabelV(midX - LANE_GAP/2, laneY + 160, '7.50 MTR ROAD'));
 
-  const sectionH = Math.max(lc1.h, b6.h, rc1.h, p5y - laneY + p5.h, block8Y - laneY + b8.h);
+  // Position col10 (113-119) below plot 125
+  const plot125X = block8X + (5 * (PW + GAP)); // Plot 125 is the 6th plot in block8Bot
+  const col10X = plot125X;
+  const col10Y = block8Y + (2 * PH + RCORR) + 60; // Below block8 with proper gap
+  const c10 = colBlock(col10X, col10Y, col10); 
+  world.push(c10.svg);
+
+  const sectionH = Math.max(lc1.h, b6.h, rc1.h, p5y - laneY + p5.h, block8Y - laneY + b8.h, col10Y - laneY + c10.h);
   y = laneY + sectionH + ROAD_GAP;
 }
 
-// SECTION 4 : block9 (irregular grid2col) + col10
+// SECTION 4 : block9 (irregular grid2col)
 {
   const laneY = y;
   let x = MARGIN;
   const b9 = grid2col(x, laneY, block9L, block9R); world.push(b9.svg);
-  x += b9.w + LANE_GAP + 260;
-  const c10 = colBlock(x, laneY, col10); world.push(c10.svg);
-  const sectionH = Math.max(b9.h, c10.h);
+  const sectionH = b9.h;
   y = laneY + sectionH + ROAD_GAP;
 }
 
