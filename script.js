@@ -394,37 +394,37 @@ let y = 70;
   const block8Y = laneY + b6.h + 60; // Position of block8
   const plot125X = block8X + (5 * (PW + GAP)); // Plot 125 is the 6th plot in block8Bot
   const col10X = plot125X;
-  const col10Y = block8Y + (2 * PH + RCORR) + 60; // Below block8 with proper gap
+  const col10Y = block8Y + (2 * PH + RCORR) + 158; // Below block8 with proper gap
   
-  // CUSTOM HEIGHTS for col10 plots (119 to 78) - EDIT THESE VALUES
-  const col10Heights = {
-    119: 36,  // Yahan apni custom height set karo
-    118: 36,
-    117: 36,
-    116: 36,
-    115: 36,
-    114: 36,
-    113: 36,
-    78: 36
+  // CUSTOM DIMENSIONS for col10 plots (119 to 78) - EDIT THESE VALUES
+  const col10Custom = {
+    119: { width: PW, height: 52, gap: GAP },  // Width, Height aur Gap khud set karo
+    118: { width: PW, height: 54, gap: GAP },
+    117: { width: PW, height: 56, gap: GAP },
+    116: { width: PW, height: 48, gap: GAP },
+    115: { width: PW, height: 48, gap: GAP },
+    114: { width: PW, height: 48, gap: GAP },
+    113: { width: PW, height: 56, gap: GAP },
+    78:  { width: PW, height: 58, gap: GAP }
   };
   
-  // Draw col10 with custom heights
+  // Draw col10 with custom dimensions
   let col10SVG = '';
   let col10CurrentY = col10Y;
   col10.forEach((plotNum) => {
-    const h = col10Heights[plotNum] || 36;
-    col10SVG += plotEl(col10X, col10CurrentY, plotNum, PW, h);
-    col10CurrentY += h + GAP;
+    const custom = col10Custom[plotNum] || { width: PW, height: 36, gap: GAP };
+    col10SVG += plotEl(col10X, col10CurrentY, plotNum, custom.width, custom.height);
+    col10CurrentY += custom.height + custom.gap;
   });
   
   // Calculate total height
-  const col10TotalH = col10.reduce((sum, num) => sum + col10Heights[num] + GAP, 0) - GAP;
+  const col10TotalH = col10.reduce((sum, num) => sum + col10Custom[num].height + col10Custom[num].gap, 0) - col10Custom[78].gap;
   
-  // Draw hedge container
-  const col10Hedge = hedge(col10X, col10Y, PW, col10TotalH);
+  // Draw hedge container (width uses first plot's width)
+  const col10Hedge = hedge(col10X, col10Y, col10Custom[119].width, col10TotalH);
   world.push(col10Hedge + col10SVG);
   
-  const c10 = {w: PW, h: col10TotalH, x: col10X, y: col10Y}; // For compatibility
+  const c10 = {w: col10Custom[119].width, h: col10TotalH, x: col10X, y: col10Y}; // For compatibility
 
   // Position block9 (105-112, 100-106) parallel to col10 (at same Y level as plot 119)
   const plot120X = block8X; // Plot 120 is at the start of block8Bot
@@ -498,13 +498,11 @@ let y = 70;
 
   const b12 = grid2row(leftX, leftY, block12Top, block12Bot); world.push(b12.svg);
   const roadY5 = leftY + b12.h + 24;
-  world.push(`<rect x="${leftX}" y="${roadY5-15}" width="${b12.w}" height="30" fill="var(--road)" rx="4"/>`);
   world.push(roadLabel(leftX + b12.w/2, roadY5, '7.50 MTR ROAD'));
   leftY += b12.h + 60;
 
   const b13 = grid2row(leftX, leftY, block13Top, block13Bot); world.push(b13.svg);
   const roadY6 = leftY + b13.h + 24;
-  world.push(`<rect x="${leftX}" y="${roadY6-15}" width="${b13.w}" height="30" fill="var(--road)" rx="4"/>`);
   world.push(roadLabel(leftX + b13.w/2, roadY6, '7.50 MTR ROAD'));
   
   const b14 = colBlock(leftX, leftY + b13.h + 60, block14); 
