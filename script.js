@@ -394,7 +394,7 @@ let y = 70;
   const block8Y = laneY + b6.h + 60; // Position of block8
   const plot125X = block8X + (5 * (PW + GAP)); // Plot 125 is the 6th plot in block8Bot
   const col10X = plot125X;
-  const col10Y = block8Y + (2 * PH + RCORR) + 120; // Below block8 - shifted down
+  const col10Y = block8Y + (2 * PH + RCORR) + 180; // Below block8 - shifted down
   
   // CUSTOM DIMENSIONS for col10 plots (119 to 78) - EDIT THESE VALUES
   const col10Custom = {
@@ -490,7 +490,7 @@ let y = 70;
 
 // SECTION 5 : left stack (11,12,13,14+15) parallel with right stack (17,18) + col19, crossover road between
 {
-  const topY = y - 250; // Balanced position - no overlap, minimal gap
+  const topY = y - 350; // Shifted up more to reduce gap with plot 78
   let leftX = MARGIN, leftY = topY;
   const b11 = grid2row(leftX, leftY, block11Top, block11Bot); world.push(b11.svg);
   world.push(roadLabel(leftX + b11.w/2, leftY + b11.h + 24, '7.50 MTR ROAD'));
