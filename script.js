@@ -338,9 +338,12 @@ let y = 70;
   const nodeX = block1X + block1W + 35; // Match section 1
   const block2X = nodeX + 70; // Match section 1
   
-  // Left column (166-154) - ALIGNED with block1 (167-173)
+  // Left column (166-154) - ALIGNED with block9 (105) and col10 (119)
   const leftColX = MARGIN;
-  const lc1 = colBlock(leftColX, laneY, leftCol1, PW, 46); 
+  // Calculate Y to align with block9/col10: block8Y + (2 * PH + RCORR) + 450
+  // block8Y is defined in section 4, so we calculate relative to laneY
+  const leftColAlignedY = laneY + 240; // Shifted down to align with block9 top
+  const lc1 = colBlock(leftColX, leftColAlignedY, leftCol1, PW, 46); 
   world.push(lc1.svg);
 
   // Middle area - blocks 143-142 positioned below plots 170-172
