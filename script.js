@@ -298,7 +298,7 @@ const block14=[54,53,52,51,50];
 const block15L=[45,46,47,48,49], block15R=[44,43,42,41,40];
 const block17Top=[81,80,79], block17Bot=[73,74,75,76];
 const extra77=[77];
-const block18L=[20,19,18,17,16,15,14,14,13,13], block18R=[21,22,23,24,25,26,27,28,29,30];
+const block18L=[20,19,18,17,16,15,14,13], block18R=[21,22,23,24,25,26,27,28,29,30];
 const col19=[39,38,37,36,35,34,33,32,31];
 const block20=[1,2,3,4,5,6];
 const block21=[7,8,9,10,11,12];
@@ -490,7 +490,7 @@ let y = 70;
 
 // SECTION 5 : left stack (11,12,13,14+15) parallel with right stack (17,18) + col19, crossover road between
 {
-  const topY = y - 280; // Shifted up to reduce gap with plot 78
+  const topY = y - 100; // Shifted up to reduce gap with plot 78
   let leftX = MARGIN, leftY = topY;
   const b11 = grid2row(leftX, leftY, block11Top, block11Bot); world.push(b11.svg);
   world.push(roadLabel(leftX + b11.w/2, leftY + b11.h + 24, '7.50 MTR ROAD'));
@@ -538,7 +538,63 @@ let y = 70;
   world.push(`<text x="${rightX+b17.w/2}" y="${rightY - 16}" class="amenity-sub">Clubhouse</text>`);
   rightY += b17.h + 60;
 
-  const b18 = grid2col(rightX, rightY, block18L, block18R); world.push(b18.svg);
+  // CUSTOM DIMENSIONS for block18 plots - EDIT THESE VALUES
+  const b18X = rightX;
+  const b18Y = rightY;
+  const block18Custom = {
+    // Left column (20 to 13)
+    20: { width: PW, height: 36, gap: GAP },
+    19: { width: PW, height: 36, gap: GAP },
+    18: { width: PW, height: 36, gap: GAP },
+    17: { width: PW, height: 36, gap: GAP },
+    16: { width: PW, height: 36, gap: GAP },
+    15: { width: PW, height: 36, gap: GAP },
+    14: { width: PW, height: 36, gap: GAP },
+    13: { width: PW, height: 36, gap: GAP },
+    // Right column (21 to 30)
+    21: { width: PW, height: 36, gap: GAP },
+    22: { width: PW, height: 36, gap: GAP },
+    23: { width: PW, height: 36, gap: GAP },
+    24: { width: PW, height: 36, gap: GAP },
+    25: { width: PW, height: 36, gap: GAP },
+    26: { width: PW, height: 36, gap: GAP },
+    27: { width: PW, height: 36, gap: GAP },
+    28: { width: PW, height: 36, gap: GAP },
+    29: { width: PW, height: 36, gap: GAP },
+    30: { width: PW, height: 36, gap: GAP }
+  };
+  
+  // Draw left column with custom dimensions
+  let b18LeftSVG = '';
+  let b18LeftY = b18Y;
+  block18L.forEach((plotNum) => {
+    const custom = block18Custom[plotNum];
+    b18LeftSVG += plotEl(b18X, b18LeftY, plotNum, custom.width, custom.height);
+    b18LeftY += custom.height + custom.gap;
+  });
+  
+  // Draw right column with custom dimensions
+  const b18RightX = b18X + PW + CORR;
+  let b18RightSVG = '';
+  let b18RightY = b18Y;
+  block18R.forEach((plotNum) => {
+    const custom = block18Custom[plotNum];
+    b18RightSVG += plotEl(b18RightX, b18RightY, plotNum, custom.width, custom.height);
+    b18RightY += custom.height + custom.gap;
+  });
+  
+  // Calculate total dimensions
+  const b18LeftH = block18L.reduce((sum, num) => sum + block18Custom[num].height + block18Custom[num].gap, 0) - block18Custom[13].gap;
+  const b18RightH = block18R.reduce((sum, num) => sum + block18Custom[num].height + block18Custom[num].gap, 0) - block18Custom[30].gap;
+  const b18TotalH = Math.max(b18LeftH, b18RightH);
+  const b18TotalW = 2 * PW + CORR;
+  
+  // Draw hedge container and plots
+  const b18Hedge = hedge(b18X, b18Y, b18TotalW, b18TotalH);
+  const b18Mid = `<line x1="${b18X+PW+CORR/2}" y1="${b18Y}" x2="${b18X+PW+CORR/2}" y2="${b18Y+b18TotalH}" stroke="#00000022" stroke-width="1" stroke-dasharray="4 4"/>`;
+  world.push(b18Hedge + b18Mid + b18LeftSVG + b18RightSVG);
+  
+  const b18 = {w: b18TotalW, h: b18TotalH, x: b18X, y: b18Y};
   
   // Position col19 (39-31) directly below plot 77 with proper gap
   const col19X = plot77X; // Same X as plot 77 (directly below)
