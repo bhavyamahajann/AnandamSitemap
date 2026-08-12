@@ -390,13 +390,41 @@ let y = 70;
 
   world.push(roadLabelV(midX - LANE_GAP/2, laneY + 160, '7.50 MTR ROAD'));
 
-  // Position col10 (113-119) below plot 125
+  // Position col10 (119-78) below plot 125 with CUSTOM HEIGHTS
   const block8Y = laneY + b6.h + 60; // Position of block8
   const plot125X = block8X + (5 * (PW + GAP)); // Plot 125 is the 6th plot in block8Bot
   const col10X = plot125X;
   const col10Y = block8Y + (2 * PH + RCORR) + 60; // Below block8 with proper gap
-  const c10 = colBlock(col10X, col10Y, col10); 
-  world.push(c10.svg);
+  
+  // CUSTOM HEIGHTS for col10 plots (119 to 78) - EDIT THESE VALUES
+  const col10Heights = {
+    119: 36,  // Yahan apni custom height set karo
+    118: 36,
+    117: 36,
+    116: 36,
+    115: 36,
+    114: 36,
+    113: 36,
+    78: 36
+  };
+  
+  // Draw col10 with custom heights
+  let col10SVG = '';
+  let col10CurrentY = col10Y;
+  col10.forEach((plotNum) => {
+    const h = col10Heights[plotNum] || 36;
+    col10SVG += plotEl(col10X, col10CurrentY, plotNum, PW, h);
+    col10CurrentY += h + GAP;
+  });
+  
+  // Calculate total height
+  const col10TotalH = col10.reduce((sum, num) => sum + col10Heights[num] + GAP, 0) - GAP;
+  
+  // Draw hedge container
+  const col10Hedge = hedge(col10X, col10Y, PW, col10TotalH);
+  world.push(col10Hedge + col10SVG);
+  
+  const c10 = {w: PW, h: col10TotalH, x: col10X, y: col10Y}; // For compatibility
 
   // Position block9 (105-112, 100-106) parallel to col10 (at same Y level as plot 119)
   const plot120X = block8X; // Plot 120 is at the start of block8Bot
