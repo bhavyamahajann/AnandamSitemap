@@ -429,7 +429,7 @@ let y = 70;
   // Position block9 (105-112, 100-106) below block8 to align with block11 later
   const plot120X = block8X; // Plot 120 is at the start of block8Bot
   const b9X = plot120X;
-  const b9Y = block8Y + (2 * PH + RCORR) + 60; // Positioned to align with block11 (plot 93)
+  const b9Y = block8Y + (2 * PH + RCORR) + 450; // Aligned parallel with col10 (same Y level)
   
   // CUSTOM HEIGHTS for left column plots (105 to 100) - EDIT THESE VALUES
   const customHeights = {
