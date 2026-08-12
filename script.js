@@ -394,7 +394,7 @@ let y = 70;
   const block8Y = laneY + b6.h + 60; // Position of block8
   const plot125X = block8X + (5 * (PW + GAP)); // Plot 125 is the 6th plot in block8Bot
   const col10X = plot125X;
-  const col10Y = block8Y + (2 * PH + RCORR) + 260; // Below block8 - aligned with block18 bottom
+  const col10Y = block8Y + (2 * PH + RCORR) + 450; // Below block8 - properly aligned with block18 bottom (plots 13-30)
   
   // CUSTOM DIMENSIONS for col10 plots (119 to 78) - EDIT THESE VALUES
   const col10Custom = {
