@@ -402,7 +402,57 @@ let y = 70;
   const plot120X = block8X; // Plot 120 is at the start of block8Bot
   const b9X = plot120X;
   const b9Y = col10Y; // Same Y level as col10 (plot 119) - parallel alignment
-  const b9 = grid2col(b9X, b9Y, block9L, block9R, CORR, PW, 60); 
+  
+  // CUSTOM HEIGHTS for left column plots (105 to 100) - EDIT THESE VALUES
+  const customHeights = {
+    105: 58,  // Yahan apni custom height set karo
+    104: 55,
+    103: 57,
+    102: 58,
+    101: 56,
+    100: 53,
+  };
+  
+  // Draw left column with custom heights
+  let b9LeftSVG = '';
+  let currentY = b9Y;
+  block9L.forEach((plotNum) => {
+    const h = customHeights[plotNum] || 56;
+    b9LeftSVG += plotEl(b9X, currentY, plotNum, PW, h);
+    currentY += h + GAP;
+  });
+  
+  // Draw right column with custom heights (106-112)
+  const customHeightsRight = {
+    106: 48,  // Yahan apni custom height set karo
+    107: 48,
+    108: 48,
+    109: 48,
+    110: 48,
+    111: 48,
+    112: 48,
+  };
+  const b9RightX = b9X + PW + CORR;
+  let b9RightSVG = '';
+  currentY = b9Y;
+  block9R.forEach((plotNum) => {
+    const h = customHeightsRight[plotNum] || 36;
+    b9RightSVG += plotEl(b9RightX, currentY, plotNum, PW, h);
+    currentY += h + GAP;
+  });
+  
+  // Calculate total dimensions
+  const leftTotalH = block9L.reduce((sum, num) => sum + customHeights[num] + GAP, 0) - GAP;
+  const rightTotalH = block9R.reduce((sum, num) => sum + customHeightsRight[num] + GAP, 0) - GAP;
+  const b9TotalH = Math.max(leftTotalH, rightTotalH);
+  const b9TotalW = 2 * PW + CORR;
+  
+  // Draw hedge container and plots
+  const b9Hedge = hedge(b9X, b9Y, b9TotalW, b9TotalH);
+  const b9Mid = `<line x1="${b9X+PW+CORR/2}" y1="${b9Y}" x2="${b9X+PW+CORR/2}" y2="${b9Y+b9TotalH}" stroke="#00000022" stroke-width="1" stroke-dasharray="4 4"/>`;
+  world.push(b9Hedge + b9Mid + b9LeftSVG + b9RightSVG);
+  
+  const b9 = {w: b9TotalW, h: b9TotalH, x: b9X, y: b9Y}; // For compatibility
   world.push(b9.svg);
 
   const rightSectionMaxH = Math.max(b6.h, rightColYAligned - laneY + rc1.h);
@@ -419,11 +469,15 @@ let y = 70;
   leftY += b11.h + 60;
 
   const b12 = grid2row(leftX, leftY, block12Top, block12Bot); world.push(b12.svg);
-  world.push(roadLabel(leftX + b12.w/2, leftY + b12.h + 24, '7.50 MTR ROAD'));
+  const roadY5 = leftY + b12.h + 24;
+  world.push(`<rect x="${leftX}" y="${roadY5-15}" width="${b12.w}" height="30" fill="var(--road)" rx="4"/>`);
+  world.push(roadLabel(leftX + b12.w/2, roadY5, '7.50 MTR ROAD'));
   leftY += b12.h + 60;
 
   const b13 = grid2row(leftX, leftY, block13Top, block13Bot); world.push(b13.svg);
-  world.push(roadLabel(leftX + b13.w/2, leftY + b13.h + 24, '7.50 MTR ROAD'));
+  const roadY6 = leftY + b13.h + 24;
+  world.push(`<rect x="${leftX}" y="${roadY6-15}" width="${b13.w}" height="30" fill="var(--road)" rx="4"/>`);
+  world.push(roadLabel(leftX + b13.w/2, roadY6, '7.50 MTR ROAD'));
   
   const b14 = colBlock(leftX, leftY + b13.h + 60, block14); 
   world.push(b14.svg);
@@ -489,16 +543,16 @@ let y = 70;
   world.push(`<text x="${x+amW/2}" y="${amY+amH-14}" class="amenity-label">KIDS PARK &amp; OUTDOOR GYM</text>`);
   track(x,amY,amW,amH);
 
-  // Position plots 7-12 directly above tennis court with reduced road gap
-  const sportsBaseX = MARGIN + 600 + 70; // Tennis court X position
+  // Position plots 7-12 directly above tennis court with proper alignment
+  const sportsBaseX = MARGIN + 600 + 85; // Adjusted position - shifted right
   const b21X = sportsBaseX; // Align plots with tennis court
   const b21Y = y - 10; 
   const b21 = rowBlock(b21X, b21Y, block21); world.push(b21.svg);
   const spY = b21Y + PH + 30; // Reduced gap for better spacing
   const spH = 170;
   const spW1 = 90, spW2 = b21.w + 90 - spW1 - 14;
-  // Sports container positioned at same X as plots
-  const sportsX = sportsBaseX;
+  // Sports container positioned at same X as plots (align corners)
+  const sportsX = b21X; // Same X as plots for corner-to-corner alignment
   world.push(`<rect x="${sportsX}" y="${spY}" width="${spW1}" height="${spH}" rx="10" style="fill:var(--green)"/>`);
   world.push(`<rect x="${sportsX+14}" y="${spY+14}" width="${spW1-28}" height="${spH-28}" rx="6" fill="#1f6f4a"/>`);
   world.push(`<text x="${sportsX+spW1/2}" y="${spY+spH/2}" class="amenity-sub" transform="rotate(-90 ${sportsX+spW1/2} ${spY+spH/2})">GYM</text>`);
