@@ -490,7 +490,7 @@ let y = 70;
 
 // SECTION 5 : left stack (11,12,13,14+15) parallel with right stack (17,18) + col19, crossover road between
 {
-  const topY = y - 700; // Shifted way up to completely eliminate gap with plot 78
+  const topY = y - 350; // Balanced position
   let leftX = MARGIN, leftY = topY;
   const b11 = grid2row(leftX, leftY, block11Top, block11Bot); world.push(b11.svg);
   world.push(roadLabel(leftX + b11.w/2, leftY + b11.h + 24, '7.50 MTR ROAD'));
@@ -505,17 +505,17 @@ let y = 70;
   const roadY6 = leftY + b13.h + 24;
   world.push(roadLabel(leftX + b13.w/2, roadY6, '7.50 MTR ROAD'));
   
-  const b14 = colBlock(leftX, leftY + b13.h + 60, block14); 
+  const b14 = colBlock(leftX, leftY + b13.h + 160, block14);  // Increased gap from 60 to 160 - shifted down
   world.push(b14.svg);
   
   // Position block15 so right column (44-40) aligns below plot 60
   const plot60X = leftX + (5 * (PW + GAP)); // Plot 60 is 6th plot (0-indexed: 5) in block13Bot row
   const b15X = plot60X - PW - CORR; // Position so right column is below plot 60
-  const b15Y = leftY + b13.h + 60; // Below block13 with gap
+  const b15Y = leftY + b13.h + 160; // Below block13 with increased gap - shifted down
   const b15 = grid2col(b15X, b15Y, block15L, block15R); 
   world.push(b15.svg);
   
-  leftY += b13.h + 60 + Math.max(b14.h, b15.h);
+  leftY += b13.h + 160 + Math.max(b14.h, b15.h);
 
   // right stack
   let rightX = leftX + b11.w + 330, rightY = y;
