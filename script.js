@@ -394,7 +394,7 @@ let y = 70;
   const block8Y = laneY + b6.h + 60; // Position of block8
   const plot125X = block8X + (5 * (PW + GAP)); // Plot 125 is the 6th plot in block8Bot
   const col10X = plot125X;
-  const col10Y = block8Y + (2 * PH + RCORR) + 60; // Below block8 with proper gap
+  const col10Y = block8Y + (2 * PH + RCORR) + 120; // Below block8 - shifted down
   
   // CUSTOM DIMENSIONS for col10 plots (119 to 78) - EDIT THESE VALUES
   const col10Custom = {
@@ -426,10 +426,10 @@ let y = 70;
   
   const c10 = {w: col10Custom[119].width, h: col10TotalH, x: col10X, y: col10Y}; // For compatibility
 
-  // Position block9 (105-112, 100-106) parallel to col10 (at same Y level as plot 119)
+  // Position block9 (105-112, 100-106) below block8 to align with block11 later
   const plot120X = block8X; // Plot 120 is at the start of block8Bot
   const b9X = plot120X;
-  const b9Y = col10Y; // Same Y level as col10 (plot 119) - parallel alignment
+  const b9Y = block8Y + (2 * PH + RCORR) + 60; // Positioned to align with block11 (plot 93)
   
   // CUSTOM HEIGHTS for left column plots (105 to 100) - EDIT THESE VALUES
   const customHeights = {
@@ -543,14 +543,14 @@ let y = 70;
   const b18Y = rightY;
   const block18Custom = {
     // Left column (20 to 13)
-    20: { width: PW, height: 36, gap: GAP },
-    19: { width: PW, height: 36, gap: GAP },
-    18: { width: PW, height: 36, gap: GAP },
-    17: { width: PW, height: 36, gap: GAP },
-    16: { width: PW, height: 36, gap: GAP },
-    15: { width: PW, height: 36, gap: GAP },
-    14: { width: PW, height: 36, gap: GAP },
-    13: { width: PW, height: 36, gap: GAP },
+    20: { width: PW, height: 46, gap: GAP },
+    19: { width: PW, height: 46, gap: GAP },
+    18: { width: PW, height: 46, gap: GAP },
+    17: { width: PW, height: 46, gap: GAP },
+    16: { width: PW, height: 45, gap: GAP },
+    15: { width: PW, height: 45, gap: GAP },
+    14: { width: PW, height: 45, gap: GAP },
+    13: { width: PW, height: 42, gap: GAP },
     // Right column (21 to 30)
     21: { width: PW, height: 36, gap: GAP },
     22: { width: PW, height: 36, gap: GAP },
