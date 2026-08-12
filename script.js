@@ -490,7 +490,7 @@ let y = 70;
 
 // SECTION 5 : left stack (11,12,13,14+15) parallel with right stack (17,18) + col19, crossover road between
 {
-  const topY = y - 150; // Shifted up to align block11 with block9 (plots 100-102)
+  const topY = y - 280; // Shifted up to reduce gap with plot 78
   let leftX = MARGIN, leftY = topY;
   const b11 = grid2row(leftX, leftY, block11Top, block11Bot); world.push(b11.svg);
   world.push(roadLabel(leftX + b11.w/2, leftY + b11.h + 24, '7.50 MTR ROAD'));
