@@ -505,24 +505,17 @@ let y = 70;
   const roadY6 = leftY + b13.h + 24;
   world.push(roadLabel(leftX + b13.w/2, roadY6, '7.50 MTR ROAD'));
   
-  // Calculate block18 Y position to align block14/15 with it
-  const b18StartY = y; // block18 starts at rightY which equals y at this point
-  
-  // Calculate how many plots down to align with plots 13/30 (bottom of block18)
-  // block18 has 8 plots in left column (20-13), so bottom is at b18StartY + (8 * (36 + 3)) - 3
-  const b18BottomY = b18StartY + (8 * (36 + 3)) - 3; // Approximate alignment with plots 13/30
-  
-  const b14 = colBlock(leftX, b18BottomY, block14); 
+  const b14 = colBlock(leftX, leftY + b13.h + 60, block14); 
   world.push(b14.svg);
   
-  // Position block15 so right column (44-40) aligns with block18 bottom
+  // Position block15 so right column (44-40) aligns below plot 60
   const plot60X = leftX + (5 * (PW + GAP)); // Plot 60 is 6th plot (0-indexed: 5) in block13Bot row
   const b15X = plot60X - PW - CORR; // Position so right column is below plot 60
-  const b15Y = b18BottomY; // Same Y as block14 - parallel with plots 13/30
+  const b15Y = leftY + b13.h + 60; // Below block13 with gap
   const b15 = grid2col(b15X, b15Y, block15L, block15R); 
   world.push(b15.svg);
   
-  leftY = b18BottomY + Math.max(b14.h, b15.h);
+  leftY += b13.h + 60 + Math.max(b14.h, b15.h);
 
   // right stack
   let rightX = leftX + b11.w + 330, rightY = y;
