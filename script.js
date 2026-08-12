@@ -505,17 +505,19 @@ let y = 70;
   const roadY6 = leftY + b13.h + 24;
   world.push(roadLabel(leftX + b13.w/2, roadY6, '7.50 MTR ROAD'));
   
-  const b14 = colBlock(leftX, leftY + b13.h + 160, block14);  // Increased gap from 60 to 160 - shifted down
+  // Align block14/15 with block18 (plots 13-30) - same Y level
+  const b14Y = y; // Same as block18 starting Y (rightY = y)
+  const b14 = colBlock(leftX, b14Y, block14);
   world.push(b14.svg);
   
-  // Position block15 so right column (44-40) aligns below plot 60
+  // Position block15 so right column (44-40) aligns with block18
   const plot60X = leftX + (5 * (PW + GAP)); // Plot 60 is 6th plot (0-indexed: 5) in block13Bot row
   const b15X = plot60X - PW - CORR; // Position so right column is below plot 60
-  const b15Y = leftY + b13.h + 160; // Below block13 with increased gap - shifted down
+  const b15Y = y; // Same Y as block14 and block18 - parallel alignment
   const b15 = grid2col(b15X, b15Y, block15L, block15R); 
   world.push(b15.svg);
   
-  leftY += b13.h + 160 + Math.max(b14.h, b15.h);
+  leftY = b14Y + Math.max(b14.h, b15.h);
 
   // right stack
   let rightX = leftX + b11.w + 330, rightY = y;
